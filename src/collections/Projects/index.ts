@@ -1,26 +1,26 @@
-import type { CollectionConfig } from 'payload/types'
+import type { CollectionConfig } from "payload/types";
 
-import { admins } from '../../access/admins'
-import { adminsOrPublished } from '../../access/adminsOrPublished'
-import { Archive } from '../../blocks/ArchiveBlock'
-import { CallToAction } from '../../blocks/CallToAction'
-import { Content } from '../../blocks/Content'
-import { MediaBlock } from '../../blocks/MediaBlock'
-import { hero } from '../../fields/hero'
-import { slugField } from '../../fields/slug'
-import { populateArchiveBlock } from '../../hooks/populateArchiveBlock'
-import { populatePublishedAt } from '../../hooks/populatePublishedAt'
-import { revalidateProject } from './hooks/revalidateProject'
+import { admins } from "../../access/admins";
+import { adminsOrPublished } from "../../access/adminsOrPublished";
+import { Archive } from "../../blocks/ArchiveBlock";
+import { CallToAction } from "../../blocks/CallToAction";
+import { Content } from "../../blocks/Content";
+import { MediaBlock } from "../../blocks/MediaBlock";
+import { hero } from "../../fields/hero";
+import { slugField } from "../../fields/slug";
+import { populateArchiveBlock } from "../../hooks/populateArchiveBlock";
+import { populatePublishedAt } from "../../hooks/populatePublishedAt";
+import { revalidateProject } from "./hooks/revalidateProject";
 
 export const Projects: CollectionConfig = {
-  slug: 'projects',
+  slug: "projects",
   admin: {
-    useAsTitle: 'title',
-    defaultColumns: ['title', 'slug', 'updatedAt'],
-    preview: doc => {
+    useAsTitle: "title",
+    defaultColumns: ["title", "slug", "updatedAt"],
+    preview: (doc) => {
       return `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/next/preview?url=${encodeURIComponent(
         `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/projects/${doc?.slug}`,
-      )}&secret=${process.env.PAYLOAD_PUBLIC_DRAFT_SECRET}`
+      )}&secret=${process.env.PAYLOAD_PUBLIC_DRAFT_SECRET}`;
     },
   },
   hooks: {
@@ -39,39 +39,39 @@ export const Projects: CollectionConfig = {
   },
   fields: [
     {
-      name: 'title',
-      type: 'text',
+      name: "title",
+      type: "text",
       required: true,
     },
     {
-      name: 'categories',
-      type: 'relationship',
-      relationTo: 'categories',
+      name: "categories",
+      type: "relationship",
+      relationTo: "categories",
       hasMany: true,
       admin: {
-        position: 'sidebar',
+        position: "sidebar",
       },
     },
     {
-      name: 'publishedAt',
-      type: 'date',
+      name: "publishedAt",
+      type: "date",
       admin: {
-        position: 'sidebar',
+        position: "sidebar",
       },
     },
     {
-      type: 'tabs',
+      type: "tabs",
       tabs: [
         {
-          label: 'Hero',
+          label: "Hero",
           fields: [hero],
         },
         {
-          label: 'Content',
+          label: "Content",
           fields: [
             {
-              name: 'layout',
-              type: 'blocks',
+              name: "layout",
+              type: "blocks",
               required: true,
               blocks: [CallToAction, Content, MediaBlock, Archive],
             },
@@ -80,18 +80,18 @@ export const Projects: CollectionConfig = {
       ],
     },
     {
-      name: 'relatedProjects',
-      type: 'relationship',
-      relationTo: 'projects',
+      name: "relatedProjects",
+      type: "relationship",
+      relationTo: "projects",
       hasMany: true,
       filterOptions: ({ id }) => {
         return {
           id: {
             not_in: [id],
           },
-        }
+        };
       },
     },
     slugField(),
   ],
-}
+};

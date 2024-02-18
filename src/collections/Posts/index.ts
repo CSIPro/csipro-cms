@@ -1,27 +1,27 @@
-import type { CollectionConfig } from 'payload/types'
+import type { CollectionConfig } from "payload/types";
 
-import { admins } from '../../access/admins'
-import { adminsOrPublished } from '../../access/adminsOrPublished'
-import { Archive } from '../../blocks/ArchiveBlock'
-import { CallToAction } from '../../blocks/CallToAction'
-import { Content } from '../../blocks/Content'
-import { MediaBlock } from '../../blocks/MediaBlock'
-import { hero } from '../../fields/hero'
-import { slugField } from '../../fields/slug'
-import { populateArchiveBlock } from '../../hooks/populateArchiveBlock'
-import { populatePublishedAt } from '../../hooks/populatePublishedAt'
-import { populateAuthors } from './hooks/populateAuthors'
-import { revalidatePost } from './hooks/revalidatePost'
+import { admins } from "../../access/admins";
+import { adminsOrPublished } from "../../access/adminsOrPublished";
+import { Archive } from "../../blocks/ArchiveBlock";
+import { CallToAction } from "../../blocks/CallToAction";
+import { Content } from "../../blocks/Content";
+import { MediaBlock } from "../../blocks/MediaBlock";
+import { hero } from "../../fields/hero";
+import { slugField } from "../../fields/slug";
+import { populateArchiveBlock } from "../../hooks/populateArchiveBlock";
+import { populatePublishedAt } from "../../hooks/populatePublishedAt";
+import { populateAuthors } from "./hooks/populateAuthors";
+import { revalidatePost } from "./hooks/revalidatePost";
 
 export const Posts: CollectionConfig = {
-  slug: 'posts',
+  slug: "posts",
   admin: {
-    useAsTitle: 'title',
-    defaultColumns: ['title', 'slug', 'updatedAt'],
-    preview: doc => {
+    useAsTitle: "title",
+    defaultColumns: ["title", "slug", "updatedAt"],
+    preview: (doc) => {
       return `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/next/preview?url=${encodeURIComponent(
         `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/posts/${doc?.slug}`,
-      )}&secret=${process.env.PAYLOAD_PUBLIC_DRAFT_SECRET}`
+      )}&secret=${process.env.PAYLOAD_PUBLIC_DRAFT_SECRET}`;
     },
   },
   hooks: {
@@ -40,54 +40,54 @@ export const Posts: CollectionConfig = {
   },
   fields: [
     {
-      name: 'title',
-      type: 'text',
+      name: "title",
+      type: "text",
       required: true,
     },
     {
-      name: 'categories',
-      type: 'relationship',
-      relationTo: 'categories',
+      name: "categories",
+      type: "relationship",
+      relationTo: "categories",
       hasMany: true,
       admin: {
-        position: 'sidebar',
+        position: "sidebar",
       },
     },
     {
-      name: 'publishedAt',
-      type: 'date',
+      name: "publishedAt",
+      type: "date",
       admin: {
-        position: 'sidebar',
+        position: "sidebar",
         date: {
-          pickerAppearance: 'dayAndTime',
+          pickerAppearance: "dayAndTime",
         },
       },
       hooks: {
         beforeChange: [
           ({ siblingData, value }) => {
-            if (siblingData._status === 'published' && !value) {
-              return new Date()
+            if (siblingData._status === "published" && !value) {
+              return new Date();
             }
-            return value
+            return value;
           },
         ],
       },
     },
     {
-      name: 'authors',
-      type: 'relationship',
-      relationTo: 'users',
+      name: "authors",
+      type: "relationship",
+      relationTo: "users",
       hasMany: true,
       admin: {
-        position: 'sidebar',
+        position: "sidebar",
       },
     },
     // This field is only used to populate the user data via the `populateAuthors` hook
     // This is because the `user` collection has access control locked to protect user privacy
     // GraphQL will also not return mutated user data that differs from the underlying schema
     {
-      name: 'populatedAuthors',
-      type: 'array',
+      name: "populatedAuthors",
+      type: "array",
       admin: {
         readOnly: true,
         disabled: true,
@@ -97,39 +97,39 @@ export const Posts: CollectionConfig = {
       },
       fields: [
         {
-          name: 'id',
-          type: 'text',
+          name: "id",
+          type: "text",
         },
         {
-          name: 'name',
-          type: 'text',
+          name: "name",
+          type: "text",
         },
       ],
     },
     {
-      type: 'tabs',
+      type: "tabs",
       tabs: [
         {
-          label: 'Hero',
+          label: "Hero",
           fields: [hero],
         },
         {
-          label: 'Content',
+          label: "Content",
           fields: [
             {
-              name: 'layout',
-              type: 'blocks',
+              name: "layout",
+              type: "blocks",
               required: true,
               blocks: [CallToAction, Content, MediaBlock, Archive],
             },
             {
-              name: 'enablePremiumContent',
-              label: 'Enable Premium Content',
-              type: 'checkbox',
+              name: "enablePremiumContent",
+              label: "Enable Premium Content",
+              type: "checkbox",
             },
             {
-              name: 'premiumContent',
-              type: 'blocks',
+              name: "premiumContent",
+              type: "blocks",
               access: {
                 read: ({ req }) => req.user,
               },
@@ -140,18 +140,18 @@ export const Posts: CollectionConfig = {
       ],
     },
     {
-      name: 'relatedPosts',
-      type: 'relationship',
-      relationTo: 'posts',
+      name: "relatedPosts",
+      type: "relationship",
+      relationTo: "posts",
       hasMany: true,
       filterOptions: ({ id }) => {
         return {
           id: {
             not_in: [id],
           },
-        }
+        };
       },
     },
     slugField(),
   ],
-}
+};
