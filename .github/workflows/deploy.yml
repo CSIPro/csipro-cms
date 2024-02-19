@@ -14,7 +14,7 @@ jobs:
       BRIDGE_HOSTNAME: ${{ secrets.BRIDGE_HOSTNAME }}
       PRODUCTION_HOSTNAME: ${{ secrets.PRODUCTION_HOSTNAME }}
       DEPLOY_USERNAME: ${{ secrets.DEPLOY_USERNAME }}
-      DATABASE_URI: ${{ secrets.DATABSE_URI }}
+      DATABASE_URI: ${{ secrets.DATABASE_URI }}
       DEPLOY_PORT: ${{ secrets.PORT }}
       PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
 
@@ -41,7 +41,7 @@ jobs:
       - name: Generate .env file
         run: |
           echo "DATABASE_URI=$DATABASE_URI" > .env
-          echo "PORT=$PORT" >> .env
+          echo "PORT=$DEPLOY_PORT" >> .env
           echo "PAYLOAD_SECRET=$PAYLOAD_SECRET" >> .env
 
       - name: Build project
