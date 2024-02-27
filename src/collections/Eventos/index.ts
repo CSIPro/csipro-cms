@@ -64,11 +64,24 @@ export const Eventos: CollectionConfig = {
       min: 0,
     },
     {
-      name: "imagen",
-      label: "Imagen",
+      name: "imagen_principal",
+      label: "Imagen Principal",
       type: "upload",
       relationTo: "media",
       required: true,
+    },
+    {
+      name: "imagenes_secundarias",
+      label: "Imagenes Secundarias",
+      type: "array",
+      fields: [
+        {
+          name: "imagen",
+          label: "Imagen",
+          type: "upload",
+          relationTo: "media",
+        },
+      ],
     },
   ],
 };
