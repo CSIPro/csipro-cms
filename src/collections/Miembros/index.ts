@@ -5,6 +5,12 @@ export const Miembros: CollectionConfig = {
   admin: {
     useAsTitle: "nombres",
   },
+  access: {
+    create: () => true,
+    read: () => true,
+    delete: () => true,
+    update: () => true,
+  },
   fields: [
     {
       name: "nombres",

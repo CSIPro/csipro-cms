@@ -5,6 +5,12 @@ export const Eventos: CollectionConfig = {
   admin: {
     useAsTitle: "titulo",
   },
+  access: {
+    create: () => true,
+    read: () => true,
+    delete: () => true,
+    update: () => true,
+  },
   fields: [
     //En el futuro puede ser una relación con la colección de categorias/tipo de evento
     {
