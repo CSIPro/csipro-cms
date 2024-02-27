@@ -48,5 +48,28 @@ export const Miembros: CollectionConfig = {
         },
       ],
     },
+    {
+      name: "fecha_entrada",
+      label: "Fecha de ingreso a CSI PRO",
+      type: "date",
+    },
+    {
+      name: "fecha_salida",
+      label: "Fecha de salida a CSI PRO",
+      type: "date",
+    },
+    {
+      name: "foto",
+      label: "Foto",
+      type: "upload",
+      relationTo: "media",
+      required: true,
+    },
+    //En un futuro hacer relación a colección de cargos
+    {
+      name: "cargo",
+      label: "Cargo",
+      type: "text",
+    },
   ],
 };
