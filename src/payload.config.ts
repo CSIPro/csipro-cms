@@ -10,6 +10,8 @@ import Users from "./collections/Users";
 import Media from "./collections/Media/index";
 import { Miembros } from "./collections/Miembros/index";
 import { Eventos } from "./collections/Eventos/index";
+import { Proyectos } from "./collections/Proyectos/index";
+import { Tecnologias } from "./collections/Tecnologias/index";
 
 export default buildConfig({
   admin: {
@@ -17,7 +19,7 @@ export default buildConfig({
     bundler: webpackBundler(),
   },
   editor: slateEditor({}),
-  collections: [Users, Media, Miembros, Eventos],
+  collections: [Users, Media, Miembros, Eventos, Proyectos, Tecnologias],
   typescript: {
     outputFile: path.resolve(__dirname, "payload-types.ts"),
   },
