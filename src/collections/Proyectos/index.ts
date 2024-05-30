@@ -20,8 +20,8 @@ export const Proyectos: CollectionConfig = {
       required: true,
     },
     {
-      name: "integrantes",
-      label: "Integrantes",
+      name: "participantes",
+      label: "Participantes",
       relationTo: "miembros",
       type: "relationship",
       hasMany: true,
@@ -84,6 +84,28 @@ export const Proyectos: CollectionConfig = {
       name: "fecha_termino",
       label: "Fecha de termino del proyecto",
       type: "date",
+    },
+    {
+      name: "estado",
+      label: "Estado del proyecto",
+      type: "select",
+      options: ["Activo", "Inactivo", "Finalizado"],
+      required: true,
+    },
+    {
+      name: "url",
+      label: "URL",
+      type: "text",
+    },
+    {
+      name: "github_url",
+      label: "GitHub URL",
+      type: "text",
+    },
+    {
+      name: "color",
+      label: "Color",
+      type: "text",
     },
   ],
 };
