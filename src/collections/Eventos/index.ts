@@ -2,6 +2,10 @@ import { CollectionConfig } from "payload/types";
 
 export const Eventos: CollectionConfig = {
   slug: "eventos",
+  labels: {
+    singular: "Evento",
+    plural: "Eventos",
+  },
   admin: {
     useAsTitle: "titulo",
   },
