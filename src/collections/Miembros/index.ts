@@ -49,7 +49,8 @@ export const Miembros: CollectionConfig = {
         {
           name: "nombre",
           label: "Nombre de Red Social",
-          type: "text",
+          relationTo: "redes_sociales",
+          type: "relationship",
         },
 
         {
@@ -80,7 +81,9 @@ export const Miembros: CollectionConfig = {
     {
       name: "cargo",
       label: "Cargo",
-      type: "text",
+      relationTo: "cargos",
+      type: "relationship",
+      required: true,
     },
   ],
 };
