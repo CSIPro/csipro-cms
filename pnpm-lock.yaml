@@ -16,7 +16,7 @@ dependencies:
     version: 3.0.0(payload@2.11.1)
   '@payloadcms/richtext-slate':
     specifier: ^1.0.0
-    version: 1.4.0(payload@2.11.1)(react-dom@18.2.0)
+    version: 1.4.0(payload@2.11.1)(react-dom@18.3.1)
   cross-env:
     specifier: ^7.0.3
     version: 7.0.3
@@ -29,6 +29,12 @@ dependencies:
   payload:
     specifier: ^2.0.0
     version: 2.11.1(typescript@4.9.5)(webpack@5.90.2)
+  react:
+    specifier: ^18.3.1
+    version: 18.3.1
+  react-dom:
+    specifier: ^18.3.1
+    version: 18.3.1(react@18.3.1)
 
 devDependencies:
   '@types/express':
@@ -1242,25 +1248,25 @@ packages:
     engines: {node: '>=10.0.0'}
     dev: false
 
-  /@dnd-kit/accessibility@3.1.0(react@18.2.0):
+  /@dnd-kit/accessibility@3.1.0(react@18.3.1):
     resolution: {integrity: sha512-ea7IkhKvlJUv9iSHJOnxinBcoOI3ppGnnL+VDJ75O45Nss6HtZd8IdN8touXPDtASfeI2T2LImb8VOZcL47wjQ==}
     peerDependencies:
       react: '>=16.8.0'
     dependencies:
-      react: 18.2.0
+      react: 18.3.1
       tslib: 2.6.2
     dev: false
 
-  /@dnd-kit/core@6.0.8(react-dom@18.2.0)(react@18.2.0):
+  /@dnd-kit/core@6.0.8(react-dom@18.3.1)(react@18.3.1):
     resolution: {integrity: sha512-lYaoP8yHTQSLlZe6Rr9qogouGUz9oRUj4AHhDQGQzq/hqaJRpFo65X+JKsdHf8oUFBzx5A+SJPUvxAwTF2OabA==}
     peerDependencies:
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
     dependencies:
-      '@dnd-kit/accessibility': 3.1.0(react@18.2.0)
-      '@dnd-kit/utilities': 3.2.2(react@18.2.0)
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
+      '@dnd-kit/accessibility': 3.1.0(react@18.3.1)
+      '@dnd-kit/utilities': 3.2.2(react@18.3.1)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
       tslib: 2.6.2
     dev: false
 
@@ -1270,7 +1276,7 @@ packages:
       '@dnd-kit/core': ^6.0.7
       react: '>=16.8.0'
     dependencies:
-      '@dnd-kit/core': 6.0.8(react-dom@18.2.0)(react@18.2.0)
+      '@dnd-kit/core': 6.0.8(react-dom@18.3.1)(react@18.3.1)
       '@dnd-kit/utilities': 3.2.2(react@18.2.0)
       react: 18.2.0
       tslib: 2.6.2
@@ -1282,6 +1288,15 @@ packages:
       react: '>=16.8.0'
     dependencies:
       react: 18.2.0
+      tslib: 2.6.2
+    dev: false
+
+  /@dnd-kit/utilities@3.2.2(react@18.3.1):
+    resolution: {integrity: sha512-+MKAJEOfaBe5SmV6t34p80MMKhjvUz0vRrvVJbPT0WElzaOJ/1xs+D+KDv+tD/NE5ujfrChEcshd4fLn0wpiqg==}
+    peerDependencies:
+      react: '>=16.8.0'
+    dependencies:
+      react: 18.3.1
       tslib: 2.6.2
     dev: false
 
@@ -1432,6 +1447,20 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       react-transition-group: 4.4.5(react-dom@18.2.0)(react@18.2.0)
+    dev: false
+
+  /@faceless-ui/modal@2.0.1(react-dom@18.3.1)(react@18.2.0):
+    resolution: {integrity: sha512-z1PaaLxwuX+1In4vhUxODZndGKdCY+WIqzvtnas3CaYGGCVJBSJ4jfv9UEEGZzcahmSy+71bEL89cUT6d36j1Q==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      body-scroll-lock: 3.1.5
+      focus-trap: 6.9.4
+      qs: 6.11.2
+      react: 18.2.0
+      react-dom: 18.3.1(react@18.3.1)
+      react-transition-group: 4.4.5(react-dom@18.3.1)(react@18.2.0)
     dev: false
 
   /@faceless-ui/scroll-info@1.3.0(react-dom@18.2.0)(react@18.2.0):
@@ -1706,21 +1735,21 @@ packages:
       - encoding
     dev: false
 
-  /@payloadcms/richtext-slate@1.4.0(payload@2.11.1)(react-dom@18.2.0):
+  /@payloadcms/richtext-slate@1.4.0(payload@2.11.1)(react-dom@18.3.1):
     resolution: {integrity: sha512-nIQmo/q5ZeRylSXuUEn6DHgDXgye/SjMZ3HNPKhyEDe1ziiCvqpgb9CJ9m1DgPg1eDqh2OYxCUHipC21k0X0jw==}
     peerDependencies:
       payload: ^2.3.0
     dependencies:
-      '@faceless-ui/modal': 2.0.1(react-dom@18.2.0)(react@18.2.0)
+      '@faceless-ui/modal': 2.0.1(react-dom@18.3.1)(react@18.2.0)
       i18next: 22.5.1
       is-hotkey: 0.2.0
       payload: 2.11.1(typescript@4.9.5)(webpack@5.90.2)
       react: 18.2.0
-      react-i18next: 11.18.6(i18next@22.5.1)(react-dom@18.2.0)(react@18.2.0)
+      react-i18next: 11.18.6(i18next@22.5.1)(react-dom@18.3.1)(react@18.2.0)
       slate: 0.91.4
       slate-history: 0.86.0(slate@0.91.4)
       slate-hyperscript: 0.81.3(slate@0.91.4)
-      slate-react: 0.92.0(react-dom@18.2.0)(react@18.2.0)(slate@0.91.4)
+      slate-react: 0.92.0(react-dom@18.3.1)(react@18.2.0)(slate@0.91.4)
     transitivePeerDependencies:
       - react-dom
       - react-native
@@ -6650,7 +6679,7 @@ packages:
     hasBin: true
     dependencies:
       '@date-io/date-fns': 2.16.0(date-fns@2.30.0)
-      '@dnd-kit/core': 6.0.8(react-dom@18.2.0)(react@18.2.0)
+      '@dnd-kit/core': 6.0.8(react-dom@18.3.1)(react@18.3.1)
       '@dnd-kit/sortable': 7.0.2(@dnd-kit/core@6.0.8)(react@18.2.0)
       '@faceless-ui/modal': 2.0.1(react-dom@18.2.0)(react@18.2.0)
       '@faceless-ui/scroll-info': 1.3.0(react-dom@18.2.0)(react@18.2.0)
@@ -6723,7 +6752,7 @@ packages:
       react-helmet: 6.1.0(react@18.2.0)
       react-i18next: 11.18.6(i18next@22.5.1)(react-dom@18.2.0)(react@18.2.0)
       react-image-crop: 10.1.8(react@18.2.0)
-      react-router-dom: 5.3.4(react@18.2.0)
+      react-router-dom: 5.3.4(react@18.3.1)
       react-router-navigation-prompt: 1.9.6(react-router-dom@5.3.4)(react@18.2.0)
       react-select: 5.7.4(react-dom@18.2.0)(react@18.2.0)
       react-toastify: 8.2.0(react-dom@18.2.0)(react@18.2.0)
@@ -7778,6 +7807,16 @@ packages:
       scheduler: 0.23.0
     dev: false
 
+  /react-dom@18.3.1(react@18.3.1):
+    resolution: {integrity: sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw==}
+    peerDependencies:
+      react: ^18.3.1
+    dependencies:
+      loose-envify: 1.4.0
+      react: 18.3.1
+      scheduler: 0.23.2
+    dev: false
+
   /react-fast-compare@3.2.2:
     resolution: {integrity: sha512-nsO+KSNgo1SbJqJEYRE9ERzo7YtYbou/OqjSQKxV7jcKox7+usiUVZOAC+XnDOABXggQTno0Y1CpVnuWEc1boQ==}
     dev: false
@@ -7812,6 +7851,26 @@ packages:
       i18next: 22.5.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
+  /react-i18next@11.18.6(i18next@22.5.1)(react-dom@18.3.1)(react@18.2.0):
+    resolution: {integrity: sha512-yHb2F9BiT0lqoQDt8loZ5gWP331GwctHz9tYQ8A2EIEUu+CcEdjBLQWli1USG3RdWQt3W+jqQLg/d4rrQR96LA==}
+    peerDependencies:
+      i18next: '>= 19.0.0'
+      react: '>= 16.8.0'
+      react-dom: '*'
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.23.9
+      html-parse-stringify: 3.0.1
+      i18next: 22.5.1
+      react: 18.2.0
+      react-dom: 18.3.1(react@18.3.1)
     dev: false
 
   /react-image-crop@10.1.8(react@18.2.0):
@@ -7850,7 +7909,7 @@ packages:
       warning: 4.0.3
     dev: false
 
-  /react-router-dom@5.3.4(react@18.2.0):
+  /react-router-dom@5.3.4(react@18.3.1):
     resolution: {integrity: sha512-m4EqFMHv/Ih4kpcBCONHbkT68KoAeHN4p3lAGoNryfHi0dMy0kCzEZakiKRsvg5wHZ/JLrLW8o8KomWiz/qbYQ==}
     peerDependencies:
       react: '>=15'
@@ -7859,8 +7918,8 @@ packages:
       history: 4.10.1
       loose-envify: 1.4.0
       prop-types: 15.8.1
-      react: 18.2.0
-      react-router: 5.3.4(react@18.2.0)
+      react: 18.3.1
+      react-router: 5.3.4(react@18.3.1)
       tiny-invariant: 1.3.1
       tiny-warning: 1.0.3
     dev: false
@@ -7872,10 +7931,10 @@ packages:
       react-router-dom: '>=4.x'
     dependencies:
       react: 18.2.0
-      react-router-dom: 5.3.4(react@18.2.0)
+      react-router-dom: 5.3.4(react@18.3.1)
     dev: false
 
-  /react-router@5.3.4(react@18.2.0):
+  /react-router@5.3.4(react@18.3.1):
     resolution: {integrity: sha512-Ys9K+ppnJah3QuaRiLxk+jDWOR1MekYQrlytiXxC1RyfbdsZkS5pvKAzCCr031xHixZwpnsYNT5xysdFHQaYsA==}
     peerDependencies:
       react: '>=15'
@@ -7886,7 +7945,7 @@ packages:
       loose-envify: 1.4.0
       path-to-regexp: 1.8.0
       prop-types: 15.8.1
-      react: 18.2.0
+      react: 18.3.1
       react-is: 16.13.1
       tiny-invariant: 1.3.1
       tiny-warning: 1.0.3
@@ -7946,8 +8005,29 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
     dev: false
 
+  /react-transition-group@4.4.5(react-dom@18.3.1)(react@18.2.0):
+    resolution: {integrity: sha512-pZcd1MCJoiKiBR2NRxeCRg13uCXbydPnmB4EOeRrY7480qNWO8IIgQG6zlDkm6uRMsURXPuKq0GWtiM59a5Q6g==}
+    peerDependencies:
+      react: '>=16.6.0'
+      react-dom: '>=16.6.0'
+    dependencies:
+      '@babel/runtime': 7.23.9
+      dom-helpers: 5.2.1
+      loose-envify: 1.4.0
+      prop-types: 15.8.1
+      react: 18.2.0
+      react-dom: 18.3.1(react@18.3.1)
+    dev: false
+
   /react@18.2.0:
     resolution: {integrity: sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==}
+    engines: {node: '>=0.10.0'}
+    dependencies:
+      loose-envify: 1.4.0
+    dev: false
+
+  /react@18.3.1:
+    resolution: {integrity: sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==}
     engines: {node: '>=0.10.0'}
     dependencies:
       loose-envify: 1.4.0
@@ -8200,6 +8280,12 @@ packages:
       loose-envify: 1.4.0
     dev: false
 
+  /scheduler@0.23.2:
+    resolution: {integrity: sha512-UOShsPwz7NrMUqhR6t0hWjFduvOzbtv7toDH1/hIrfRNIDBnnBWd0CwJTGvTpngVlmwGCdP9/Zl/tVrDqcuYzQ==}
+    dependencies:
+      loose-envify: 1.4.0
+    dev: false
+
   /schema-utils@3.3.0:
     resolution: {integrity: sha512-pN/yOAvcC+5rQ5nERGuwrjLlYvLTbCibnZ1I7B1LaiAz9BRBlE9GMgE/eqV30P7aJQUf7Ddimy/RsbYO/GrVGg==}
     engines: {node: '>= 10.13.0'}
@@ -8427,7 +8513,7 @@ packages:
       slate: 0.91.4
     dev: false
 
-  /slate-react@0.92.0(react-dom@18.2.0)(react@18.2.0)(slate@0.91.4):
+  /slate-react@0.92.0(react-dom@18.3.1)(react@18.2.0)(slate@0.91.4):
     resolution: {integrity: sha512-xEDKu5RKw5f0N95l1UeNQnrB0Pxh4JPjpIZR/BVsMo0ININnLAknR99gLo46bl/Ffql4mr7LeaxQRoXxbFtJOQ==}
     peerDependencies:
       react: '>=16.8.0'
@@ -8442,7 +8528,7 @@ packages:
       is-plain-object: 5.0.0
       lodash: 4.17.21
       react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
+      react-dom: 18.3.1(react@18.3.1)
       scroll-into-view-if-needed: 2.2.31
       slate: 0.91.4
       tiny-invariant: 1.0.6

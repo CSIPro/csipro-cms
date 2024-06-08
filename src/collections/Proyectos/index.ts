@@ -1,4 +1,5 @@
 import { CollectionConfig } from "payload/types";
+import colorField from "../../color-picker/config";
 
 export const Proyectos: CollectionConfig = {
   slug: "proyectos",
@@ -107,10 +108,6 @@ export const Proyectos: CollectionConfig = {
       label: "GitHub URL",
       type: "text",
     },
-    {
-      name: "color",
-      label: "Color",
-      type: "text",
-    },
+    colorField,
   ],
 };
