@@ -15,14 +15,22 @@ import { Tecnologias } from "./collections/Tecnologias/index";
 import { Cargos } from "./collections/Cargos";
 import { Redes_sociales } from "./collections/Redes_sociales";
 
-
 export default buildConfig({
   admin: {
     user: Users.slug,
     bundler: webpackBundler(),
   },
   editor: slateEditor({}),
-  collections: [Users, Media, Miembros, Eventos, Proyectos, Tecnologias, Cargos, Redes_sociales],
+  collections: [
+    Users,
+    Media,
+    Miembros,
+    Eventos,
+    Proyectos,
+    Tecnologias,
+    Cargos,
+    Redes_sociales,
+  ],
   typescript: {
     outputFile: path.resolve(__dirname, "payload-types.ts"),
   },
