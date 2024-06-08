@@ -8,6 +8,7 @@ export const Eventos: CollectionConfig = {
   },
   admin: {
     useAsTitle: "titulo",
+    defaultColumns: ["tipo", "titulo", "fecha", "lugar", "cupos"],
   },
   access: {
     create: () => true,
