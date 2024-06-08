@@ -2,8 +2,13 @@ import { CollectionConfig } from "payload/types";
 
 export const Tecnologias: CollectionConfig = {
   slug: "tecnologias",
+  labels: {
+    singular: "Tecnología",
+    plural: "Tecnologías",
+  },
   admin: {
     useAsTitle: "nombre",
+    defaultColumns: ["nombre", "logo", "logo_monocromatico"],
   },
   access: {
     create: () => true,

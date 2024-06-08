@@ -2,8 +2,13 @@ import { CollectionConfig } from "payload/types";
 
 export const Proyectos: CollectionConfig = {
   slug: "proyectos",
+  labels: {
+    singular: "Proyecto",
+    plural: "Proyectos",
+  },
   admin: {
     useAsTitle: "nombre",
+    defaultColumns: ["nombre", "tipo_sistema", "estado"],
   },
   access: {
     create: () => true,
