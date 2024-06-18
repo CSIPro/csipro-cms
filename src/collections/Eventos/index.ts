@@ -30,36 +30,41 @@ export const Eventos: CollectionConfig = {
       required: true,
     },
     {
-      name: "fecha",
-      label: "Fecha",
-      type: "date",
+      name: "fechas_horas",
+      label: "Fechas y Horas",
+      type: "array",
       required: true,
-      admin: {
-        date: {
-          pickerAppearance: "dayOnly",
-        },
+      labels: {
+        singular: "Fecha y Hora",
+        plural: "Fechas y Horas",
       },
-    },
-    {
-      name: "hora",
-      label: "Hora",
-      type: "date",
-      admin: {
-        date: {
-          pickerAppearance: "timeOnly",
+      fields: [
+        {
+          name: "fecha_hora",
+          label: "Fecha y Hora",
+          type: "date",
+          admin: {
+            date: {
+              pickerAppearance: "dayAndTime",
+
+              timeFormat: "HH:mm",
+            },
+          },
         },
-      },
+      ],
     },
     {
       name: "lugar",
       label: "Lugar",
       type: "text",
+      required: true,
     },
     {
       name: "duracion",
-      label: "Duración",
+      label: "Duración (en horas)",
       type: "number",
       min: 0,
+      required: true,
     },
     {
       name: "participantes",
@@ -67,11 +72,13 @@ export const Eventos: CollectionConfig = {
       relationTo: "miembros",
       type: "relationship",
       hasMany: true,
+      required: true,
     },
     {
       name: "cupos",
       label: "Número de lugares disponibles",
       type: "number",
+      required: true,
       min: 0,
     },
     {
@@ -91,6 +98,85 @@ export const Eventos: CollectionConfig = {
           label: "Imagen",
           type: "upload",
           relationTo: "media",
+        },
+      ],
+    },
+    {
+      name: "descripcion",
+      label: "Descripción",
+      type: "richText",
+    },
+    {
+      name: "asistentes",
+      label: "Asistentes",
+      type: "array",
+      fields: [
+        {
+          name: "nombre",
+          label: "Nombre(s)",
+          type: "text",
+          required: true,
+        },
+        {
+          name: "apellido",
+          label: "Apellido(s)",
+          type: "text",
+          required: true,
+        },
+        {
+          name: "email",
+          label: "Email",
+          type: "email",
+          required: true,
+        },
+        {
+          name: "expediente",
+          label: "Expediente",
+          type: "text",
+        },
+      ],
+    },
+    {
+      name: "requisitos",
+      label: "Requisitos",
+      type: "array",
+      fields: [
+        {
+          name: "nombre_requisito",
+          label: "Nombre del requisito",
+          type: "richText",
+          required: true,
+        },
+        {
+          name: "detalles",
+          label: "Detalles",
+          type: "richText",
+        },
+      ],
+    },
+    {
+      name: "publicaciones",
+      label: "Publicaciones",
+      type: "array",
+      fields: [
+        {
+          name: "titulo_publicacion",
+          label: "Título de la publicación",
+          type: "text",
+          required: true,
+        },
+        {
+          name: "red_social",
+          label: "Red Social",
+          type: "relationship",
+          relationTo: "redes_sociales",
+          required: true,
+        },
+        {
+          name: "link",
+          label: "Link a publicación",
+          type: "text",
+          required: true,
         },
       ],
     },
