@@ -33,11 +33,11 @@ export const Eventos: CollectionConfig = {
       name: "fechas_horas",
       label: "Fechas y Horas",
       type: "array",
+      required: true,
       labels: {
         singular: "Fecha y Hora",
         plural: "Fechas y Horas",
       },
-
       fields: [
         {
           name: "fecha_hora",
@@ -57,12 +57,14 @@ export const Eventos: CollectionConfig = {
       name: "lugar",
       label: "Lugar",
       type: "text",
+      required: true,
     },
     {
       name: "duracion",
-      label: "Duración",
+      label: "Duración (en horas)",
       type: "number",
       min: 0,
+      required: true,
     },
     {
       name: "participantes",
@@ -70,11 +72,13 @@ export const Eventos: CollectionConfig = {
       relationTo: "miembros",
       type: "relationship",
       hasMany: true,
+      required: true,
     },
     {
       name: "cupos",
       label: "Número de lugares disponibles",
       type: "number",
+      required: true,
       min: 0,
     },
     {
