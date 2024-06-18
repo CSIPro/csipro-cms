@@ -48,6 +48,13 @@ export const Proyectos: CollectionConfig = {
       type: "richText",
     },
     {
+      name: "subtitulo",
+      label: "Subtítulo",
+      type: "text",
+      maxLength: 100,
+      required: true,
+    },
+    {
       name: "imagen_principal",
       label: "Imagen Principal",
       type: "upload",
@@ -81,7 +88,7 @@ export const Proyectos: CollectionConfig = {
       ],
     },
     {
-      name: "fecha_incio",
+      name: "fecha_inicio",
       label: "Fecha de inicio del proyecto",
       type: "date",
     },
@@ -105,11 +112,6 @@ export const Proyectos: CollectionConfig = {
     {
       name: "github_url",
       label: "GitHub URL",
-      type: "text",
-    },
-    {
-      name: "color",
-      label: "Color",
       type: "text",
     },
   ],
