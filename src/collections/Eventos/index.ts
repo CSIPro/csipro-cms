@@ -1,4 +1,7 @@
 import { CollectionConfig } from "payload/types";
+import { insertFechas } from "./hooks/insertFechas";
+
+const fecha_minima = new Date(2014, 0, 1);
 
 export const Eventos: CollectionConfig = {
   slug: "eventos",
@@ -9,6 +12,9 @@ export const Eventos: CollectionConfig = {
   admin: {
     useAsTitle: "titulo",
     defaultColumns: ["tipo", "titulo", "fecha", "lugar", "cupos"],
+  },
+  hooks: {
+    beforeChange: [insertFechas],
   },
   access: {
     create: () => true,
@@ -30,27 +36,42 @@ export const Eventos: CollectionConfig = {
       required: true,
     },
     {
-      name: "fecha_inicio",
-      label: "Fecha de inicio",
+      name: "enable_multi_dates",
+      type: "checkbox", // required
+      label: "Presioname para habilitar multiples fechas y horas",
+      defaultValue: false,
+    },
+    {
+      name: "fecha_unica",
+      label: "Fecha del evento",
       type: "date",
+      required: true,
       admin: {
+        condition: (data) => {
+          return !data.enable_multi_dates;
+        },
+        description: "Fecha en que sucede el evento.",
         date: {
+          minDate: fecha_minima,
           pickerAppearance: "dayAndTime",
-
           timeFormat: "HH:mm",
         },
       },
     },
+
     {
-      name: "fecha_fin",
-      label: "Fecha fin",
+      name: "fecha_inicio",
+      label: "Fecha de inicio",
       type: "date",
+      required: true,
+
       admin: {
+        disabled: true,
         description:
-          "Ultima fecha de un evento que dura varios días. Deberá de ser la misma que la ultima fecha de la lista de fechas y horas.",
+          "Fecha en que inicia el evento. Deberá de ser la misma que la primera fecha de la lista de fechas y horas.",
         date: {
           pickerAppearance: "dayAndTime",
-
+          minDate: fecha_minima,
           timeFormat: "HH:mm",
         },
       },
@@ -64,6 +85,13 @@ export const Eventos: CollectionConfig = {
         singular: "Fecha y Hora",
         plural: "Fechas y Horas",
       },
+      admin: {
+        condition: (data) => {
+          return data.enable_multi_dates;
+        },
+        description:
+          "Lista de fechas y horas en las que se llevará a cabo el evento. Instroducir una unica fecha si el evento no durá más de un día.",
+      },
       fields: [
         {
           name: "fecha_hora",
@@ -72,12 +100,28 @@ export const Eventos: CollectionConfig = {
           admin: {
             date: {
               pickerAppearance: "dayAndTime",
-
+              minDate: fecha_minima,
               timeFormat: "HH:mm",
             },
           },
         },
       ],
+    },
+    {
+      name: "fecha_fin",
+      label: "Fecha fin",
+      required: true,
+      type: "date",
+      admin: {
+        disabled: true,
+        description:
+          "Ultima fecha de un evento que dura varios días. Deberá de ser la misma que la ultima fecha de la lista de fechas y horas. Si el evento dura un solo día, deberá de ser la misma que la fecha de inicio.",
+        date: {
+          pickerAppearance: "dayAndTime",
+          minDate: fecha_minima,
+          timeFormat: "HH:mm",
+        },
+      },
     },
     {
       name: "lugar",
