@@ -30,6 +30,32 @@ export const Eventos: CollectionConfig = {
       required: true,
     },
     {
+      name: "fecha_inicio",
+      label: "Fecha de inicio",
+      type: "date",
+      admin: {
+        date: {
+          pickerAppearance: "dayAndTime",
+
+          timeFormat: "HH:mm",
+        },
+      },
+    },
+    {
+      name: "fecha_fin",
+      label: "Fecha fin",
+      type: "date",
+      admin: {
+        description:
+          "Ultima fecha de un evento que dura varios días. Deberá de ser la misma que la ultima fecha de la lista de fechas y horas.",
+        date: {
+          pickerAppearance: "dayAndTime",
+
+          timeFormat: "HH:mm",
+        },
+      },
+    },
+    {
       name: "fechas_horas",
       label: "Fechas y Horas",
       type: "array",
