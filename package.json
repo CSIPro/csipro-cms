@@ -14,7 +14,7 @@
     "generate:types": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts payload generate:types",
     "generate:graphQLSchema": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts payload generate:graphQLSchema",
     "payload": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts payload",
-    "lint": "eslint ."
+    "lint": "eslint --fix ."
   },
   "dependencies": {
     "@payloadcms/bundler-webpack": "^1.0.0",
