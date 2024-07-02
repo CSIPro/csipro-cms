@@ -2,9 +2,9 @@ import { CollectionBeforeChangeHook } from "payload/types";
 
 export const insertFechas: CollectionBeforeChangeHook = async ({
   data, // incoming data to update or create with
-  req, // full express request
-  operation, // name of the operation ie. 'create', 'update'
-  originalDoc, // original document
+  req: _req, // full express request
+  operation: _operation, // name of the operation ie. 'create', 'update'
+  originalDoc: _originalDoc, // original document
 }) => {
   // If the incoming data has the `enable_multi_dates` checkbox checked
   if (data.enable_multi_dates) {
