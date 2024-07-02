@@ -22,6 +22,7 @@ export const Eventos: CollectionConfig = {
     delete: () => true,
     update: () => true,
   },
+  defaultSort: "-fecha_fin",
   fields: [
     //En el futuro puede ser una relación con la colección de categorias/tipo de evento
     {
