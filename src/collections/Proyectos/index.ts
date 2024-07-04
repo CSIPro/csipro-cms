@@ -36,7 +36,7 @@ export const Proyectos: CollectionConfig = {
       label: "Tipo de sistema",
       type: "select",
       options: [
-        "Aplicación Movil",
+        "Aplicación Móvil",
         "Aplicación de Escritorio",
         "Aplicación Web",
       ],
@@ -91,6 +91,7 @@ export const Proyectos: CollectionConfig = {
       name: "fecha_inicio",
       label: "Fecha de inicio del proyecto",
       type: "date",
+      required: true,
     },
     {
       name: "fecha_termino",
