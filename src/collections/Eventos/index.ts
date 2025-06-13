@@ -1,4 +1,4 @@
-import { CollectionConfig } from "payload/types";
+import { CollectionConfig } from "payload";
 import { insertFechas } from "./hooks/insertFechas";
 
 const fecha_minima = new Date(2014, 0, 1);
