@@ -1,4 +1,4 @@
-import { CollectionBeforeChangeHook } from "payload/types";
+import { CollectionBeforeChangeHook } from "payload";
 
 export const insertFechas: CollectionBeforeChangeHook = async ({
   data, // incoming data to update or create with
@@ -11,14 +11,10 @@ export const insertFechas: CollectionBeforeChangeHook = async ({
     // If the incoming data has the `fecha_unica` field
     // order date.fechas_horas by date.fecha_hora
     data.fechas_horas.sort((a, b) => {
-      return (
-        new Date(a.fecha_hora).getTime() - new Date(b.fecha_hora).getTime()
-      );
+      return new Date(a.fecha_hora).getTime() - new Date(b.fecha_hora).getTime();
     });
     data.fecha_inicio = new Date(data.fechas_horas[0].fecha_hora);
-    data.fecha_fin = new Date(
-      data.fechas_horas[data.fechas_horas.length - 1].fecha_hora,
-    );
+    data.fecha_fin = new Date(data.fechas_horas[data.fechas_horas.length - 1].fecha_hora);
   } else {
     const fecha_unica = new Date(data.fecha_unica);
     data.fecha_inicio = fecha_unica;
