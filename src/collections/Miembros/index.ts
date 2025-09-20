@@ -45,31 +45,6 @@ export const Miembros: CollectionConfig = {
         description:
           "El slug es una versión amigable del nombre, generalmente en minúsculas y sin espacios. Se utiliza en las URLs para identificar de manera única a un miembro. Ejemplo: juan-perez",
       },
-      hooks: {
-        beforeChange: [
-          ({ data }) => {
-            if (data.nombres && data.apellidos) {
-              const nombresSlug = data.nombres
-                .toLowerCase()
-                .replace(/\s+/g, "-")
-                .normalize("NFD")
-                .replace(/[\u0300-\u036f]/g, ""); // Eliminar acentos
-
-              const apellidosSlug = data.apellidos
-                .toLowerCase()
-                .replace(/\s+/g, "-")
-                .normalize("NFD")
-                .replace(/[\u0300-\u036f]/g, ""); // Eliminar acentos
-
-              return {
-                ...data,
-                slug: `${nombresSlug}-${apellidosSlug}`,
-              };
-            }
-            return data;
-          },
-        ],
-      },
     },
     {
       name: "redes", // required
