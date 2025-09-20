@@ -35,11 +35,7 @@ export const Proyectos: CollectionConfig = {
       name: "tipo_sistema",
       label: "Tipo de sistema",
       type: "select",
-      options: [
-        "Aplicación Móvil",
-        "Aplicación de Escritorio",
-        "Aplicación Web",
-      ],
+      options: ["Aplicación Móvil", "Aplicación de Escritorio", "Aplicación Web"],
       required: true,
     },
     {

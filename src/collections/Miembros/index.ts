@@ -77,6 +77,19 @@ export const Miembros: CollectionConfig = {
       relationTo: "media",
       required: true,
     },
+    {
+      name: "fotos-secundarias",
+      label: "Galería",
+      type: "array",
+      fields: [
+        {
+          name: "imagen",
+          label: "Imagen",
+          type: "upload",
+          relationTo: "media",
+        },
+      ],
+    },
     //En un futuro hacer relación a colección de cargos
     {
       name: "cargo",
@@ -84,6 +97,12 @@ export const Miembros: CollectionConfig = {
       relationTo: "cargos",
       type: "relationship",
       required: true,
+    },
+    {
+      name: "proyectos",
+      type: "join",
+      collection: "proyectos",
+      on: "participantes",
     },
   ],
 };
