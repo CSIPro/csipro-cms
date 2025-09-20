@@ -8,7 +8,7 @@ export const Miembros: CollectionConfig = {
   },
   admin: {
     useAsTitle: "nombres",
-    defaultColumns: ["nombres", "apellidos", "email", "cargo"],
+    defaultColumns: ["nombres", "apellidos", "slug", "email", "cargo"],
   },
   access: {
     create: () => true,
@@ -34,6 +34,7 @@ export const Miembros: CollectionConfig = {
       label: "Email",
       type: "email",
       required: true,
+      unique: true,
     },
     {
       name: "slug",
@@ -41,9 +42,22 @@ export const Miembros: CollectionConfig = {
       type: "text",
       required: true,
       unique: true,
+      index: true,
       admin: {
         description:
           "El slug es una versión amigable del nombre, generalmente en minúsculas y sin espacios. Se utiliza en las URLs para identificar de manera única a un miembro. Ejemplo: juan-perez",
+      },
+      validate: (value) => {
+        if (!value) {
+          return "El slug es obligatorio.";
+        }
+
+        const slugRegex = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+        if (!slugRegex.test(value)) {
+          return "El slug solo puede contener letras minúsculas, números y guiones.";
+        }
+
+        return true;
       },
     },
     {
@@ -108,11 +122,11 @@ export const Miembros: CollectionConfig = {
       type: "relationship",
       required: true,
     },
-    // {
-    //   name: "proyectos",
-    //   type: "join",
-    //   collection: "proyectos",
-    //   on: "participantes",
-    // },
+    {
+      name: "proyectos",
+      type: "join",
+      collection: "proyectos",
+      on: "participantes",
+    },
   ],
 };

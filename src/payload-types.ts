@@ -79,7 +79,11 @@ export interface Config {
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
-  collectionsJoins: {};
+  collectionsJoins: {
+    miembros: {
+      proyectos: 'proyectos';
+    };
+  };
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
@@ -306,6 +310,10 @@ export interface Miembro {
   nombres: string;
   apellidos: string;
   email: string;
+  /**
+   * El slug es una versión amigable del nombre, generalmente en minúsculas y sin espacios. Se utiliza en las URLs para identificar de manera única a un miembro. Ejemplo: juan-perez
+   */
+  slug: string;
   redes?:
     | {
         nombre?: (string | null) | RedesSociale;
@@ -316,7 +324,18 @@ export interface Miembro {
   fecha_entrada?: string | null;
   fecha_salida?: string | null;
   foto: string | Media;
+  'fotos-secundarias'?:
+    | {
+        imagen?: (string | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
   cargo: string | Cargo;
+  proyectos?: {
+    docs?: (string | Proyecto)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -578,6 +597,7 @@ export interface MiembrosSelect<T extends boolean = true> {
   nombres?: T;
   apellidos?: T;
   email?: T;
+  slug?: T;
   redes?:
     | T
     | {
@@ -588,7 +608,14 @@ export interface MiembrosSelect<T extends boolean = true> {
   fecha_entrada?: T;
   fecha_salida?: T;
   foto?: T;
+  'fotos-secundarias'?:
+    | T
+    | {
+        imagen?: T;
+        id?: T;
+      };
   cargo?: T;
+  proyectos?: T;
   updatedAt?: T;
   createdAt?: T;
 }
