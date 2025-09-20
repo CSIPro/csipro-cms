@@ -108,11 +108,11 @@ export const Miembros: CollectionConfig = {
       type: "relationship",
       required: true,
     },
-    {
-      name: "proyectos",
-      type: "join",
-      collection: "proyectos",
-      on: "participantes",
-    },
+    // {
+    //   name: "proyectos",
+    //   type: "join",
+    //   collection: "proyectos",
+    //   on: "participantes",
+    // },
   ],
 };
