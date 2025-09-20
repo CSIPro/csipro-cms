@@ -98,7 +98,7 @@ export interface Config {
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
   };
   db: {
-    defaultIDType: string;
+    defaultIDType: number;
   };
   globals: {};
   globalsSelect: {};
@@ -134,7 +134,7 @@ export interface UserAuthOperations {
  * via the `definition` "users".
  */
 export interface User {
-  id: string;
+  id: number;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -151,7 +151,7 @@ export interface User {
  * via the `definition` "media".
  */
 export interface Media {
-  id: string;
+  id: number;
   alt: string;
   updatedAt: string;
   createdAt: string;
@@ -170,7 +170,7 @@ export interface Media {
  * via the `definition` "cargos".
  */
 export interface Cargo {
-  id: string;
+  id: number;
   nombre: string;
   descripcion: {
     root: {
@@ -195,7 +195,7 @@ export interface Cargo {
  * via the `definition` "eventos".
  */
 export interface Evento {
-  id: string;
+  id: number;
   tipo?: string | null;
   titulo: string;
   enable_multi_dates?: boolean | null;
@@ -222,12 +222,12 @@ export interface Evento {
   fecha_fin: string;
   lugar: string;
   duracion: number;
-  participantes: (string | Miembro)[];
+  participantes: (number | Miembro)[];
   cupos: number;
-  imagen_principal: string | Media;
+  imagen_principal: number | Media;
   imagenes_secundarias?:
     | {
-        imagen?: (string | null) | Media;
+        imagen?: (number | null) | Media;
         id?: string | null;
       }[]
     | null;
@@ -293,7 +293,7 @@ export interface Evento {
   publicaciones?:
     | {
         titulo_publicacion: string;
-        red_social: string | RedesSociale;
+        red_social: number | RedesSociale;
         link: string;
         id?: string | null;
       }[]
@@ -306,7 +306,7 @@ export interface Evento {
  * via the `definition` "miembros".
  */
 export interface Miembro {
-  id: string;
+  id: number;
   nombres: string;
   apellidos: string;
   email: string;
@@ -316,23 +316,23 @@ export interface Miembro {
   slug: string;
   redes?:
     | {
-        nombre?: (string | null) | RedesSociale;
+        nombre?: (number | null) | RedesSociale;
         link?: string | null;
         id?: string | null;
       }[]
     | null;
   fecha_entrada?: string | null;
   fecha_salida?: string | null;
-  foto: string | Media;
+  foto: number | Media;
   'fotos-secundarias'?:
     | {
-        imagen?: (string | null) | Media;
+        imagen?: (number | null) | Media;
         id?: string | null;
       }[]
     | null;
-  cargo: string | Cargo;
+  cargo: number | Cargo;
   proyectos?: {
-    docs?: (string | Proyecto)[];
+    docs?: (number | Proyecto)[];
     hasNextPage?: boolean;
     totalDocs?: number;
   };
@@ -344,10 +344,10 @@ export interface Miembro {
  * via the `definition` "redes_sociales".
  */
 export interface RedesSociale {
-  id: string;
+  id: number;
   nombre: string;
-  logo: string | Media;
-  logo_monocromatico: string | Media;
+  logo: number | Media;
+  logo_monocromatico: number | Media;
   updatedAt: string;
   createdAt: string;
 }
@@ -356,9 +356,9 @@ export interface RedesSociale {
  * via the `definition` "proyectos".
  */
 export interface Proyecto {
-  id: string;
+  id: number;
   nombre: string;
-  participantes?: (string | Miembro)[] | null;
+  participantes?: (number | Miembro)[] | null;
   tipo_sistema: 'Aplicación Móvil' | 'Aplicación de Escritorio' | 'Aplicación Web';
   descripcion?: {
     root: {
@@ -376,16 +376,16 @@ export interface Proyecto {
     [k: string]: unknown;
   } | null;
   subtitulo: string;
-  imagen_principal: string | Media;
+  imagen_principal: number | Media;
   imagenes_secundarias?:
     | {
-        imagen?: (string | null) | Media;
+        imagen?: (number | null) | Media;
         id?: string | null;
       }[]
     | null;
   tecnologias?:
     | {
-        tecnologia?: (string | null) | Tecnologia;
+        tecnologia?: (number | null) | Tecnologia;
         id?: string | null;
       }[]
     | null;
@@ -402,10 +402,10 @@ export interface Proyecto {
  * via the `definition` "tecnologias".
  */
 export interface Tecnologia {
-  id: string;
+  id: number;
   nombre: string;
-  logo: string | Media;
-  logo_monocromatico: string | Media;
+  logo: number | Media;
+  logo_monocromatico: number | Media;
   updatedAt: string;
   createdAt: string;
 }
@@ -414,44 +414,44 @@ export interface Tecnologia {
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-  id: string;
+  id: number;
   document?:
     | ({
         relationTo: 'users';
-        value: string | User;
+        value: number | User;
       } | null)
     | ({
         relationTo: 'media';
-        value: string | Media;
+        value: number | Media;
       } | null)
     | ({
         relationTo: 'cargos';
-        value: string | Cargo;
+        value: number | Cargo;
       } | null)
     | ({
         relationTo: 'eventos';
-        value: string | Evento;
+        value: number | Evento;
       } | null)
     | ({
         relationTo: 'miembros';
-        value: string | Miembro;
+        value: number | Miembro;
       } | null)
     | ({
         relationTo: 'proyectos';
-        value: string | Proyecto;
+        value: number | Proyecto;
       } | null)
     | ({
         relationTo: 'redes_sociales';
-        value: string | RedesSociale;
+        value: number | RedesSociale;
       } | null)
     | ({
         relationTo: 'tecnologias';
-        value: string | Tecnologia;
+        value: number | Tecnologia;
       } | null);
   globalSlug?: string | null;
   user: {
     relationTo: 'users';
-    value: string | User;
+    value: number | User;
   };
   updatedAt: string;
   createdAt: string;
@@ -461,10 +461,10 @@ export interface PayloadLockedDocument {
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: string;
+  id: number;
   user: {
     relationTo: 'users';
-    value: string | User;
+    value: number | User;
   };
   key?: string | null;
   value?:
@@ -484,7 +484,7 @@ export interface PayloadPreference {
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: string;
+  id: number;
   name?: string | null;
   batch?: number | null;
   updatedAt: string;
