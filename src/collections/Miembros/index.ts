@@ -147,4 +147,27 @@ export const Miembros: CollectionConfig = {
       on: "participantes",
     },
   ],
+  hooks: {
+    afterRead: [
+      async ({ doc, req }) => {
+        if (!doc || !doc.id) return doc;
+        const proyectosCollection = req.payload.collections["proyectos"];
+        if (!proyectosCollection) return doc;
+        const result = await req.payload.count({
+          collection: "proyectos",
+          where: {
+            participantes: {
+              equals: doc.id,
+            },
+          },
+        });
+        if (typeof doc.proyectos === "object" && doc.proyectos !== null) {
+          doc.proyectos.totalDocs = result.totalDocs;
+        } else {
+          doc.proyectos = { docs: [], hasNextPage: false, totalDocs: result.totalDocs };
+        }
+        return doc;
+      },
+    ],
+  },
 };
