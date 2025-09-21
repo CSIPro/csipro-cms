@@ -91,8 +91,8 @@ export const Miembros: CollectionConfig = {
       },
       fields: [
         {
-          name: "nombre",
-          label: "Nombre de Red Social",
+          name: "red",
+          label: "Red Social",
           relationTo: "redes_sociales",
           type: "relationship",
         },

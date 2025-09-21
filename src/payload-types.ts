@@ -324,7 +324,7 @@ export interface Miembro {
   slug: string;
   redes?:
     | {
-        nombre?: (number | null) | RedesSociale;
+        red?: (number | null) | RedesSociale;
         link?: string | null;
         id?: string | null;
       }[]
@@ -615,7 +615,7 @@ export interface MiembrosSelect<T extends boolean = true> {
   redes?:
     | T
     | {
-        nombre?: T;
+        red?: T;
         link?: T;
         id?: T;
       };
