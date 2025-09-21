@@ -14,9 +14,9 @@ jobs:
       BRIDGE_HOSTNAME: ${{ secrets.BRIDGE_HOSTNAME }}
       PRODUCTION_HOSTNAME: ${{ secrets.PRODUCTION_HOSTNAME }}
       DEPLOY_USERNAME: ${{ secrets.DEPLOY_USERNAME }}
-      DATABASE_URI: ${{ secrets.DATABASE_URI }}
       DEPLOY_PORT: ${{ secrets.PORT }}
       PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
+      ENV_VARS: ${{ secrets.ENV_VARS }}
 
     steps:
       - name: Checkout repo
@@ -40,9 +40,9 @@ jobs:
 
       - name: Generate .env file
         run: |
-          echo "DATABASE_URI=$DATABASE_URI" > .env
-          echo "PORT=$DEPLOY_PORT" >> .env
+          echo "PORT=$DEPLOY_PORT" > .env
           echo "PAYLOAD_SECRET=$PAYLOAD_SECRET" >> .env
+          echo "$ENV_VARS" >> .env
 
       - name: Build project
         run: pnpm build
