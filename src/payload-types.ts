@@ -198,6 +198,10 @@ export interface Evento {
   id: number;
   tipo?: string | null;
   titulo: string;
+  /**
+   * El slug es una versión amigable del nombre, generalmente en minúsculas y sin espacios. Se utiliza en las URLs para identificar de manera única a un evento. Ejemplo: csipro-kickoff-2024
+   */
+  slug: string;
   enable_multi_dates?: boolean | null;
   /**
    * Fecha en que sucede el evento.
@@ -311,6 +315,10 @@ export interface Miembro {
   apellidos: string;
   email: string;
   /**
+   * Link a portafolio personal o página web.
+   */
+  portfolio?: string | null;
+  /**
    * El slug es una versión amigable del nombre, generalmente en minúsculas y sin espacios. Se utiliza en las URLs para identificar de manera única a un miembro. Ejemplo: juan-perez
    */
   slug: string;
@@ -360,6 +368,10 @@ export interface Proyecto {
   nombre: string;
   participantes?: (number | Miembro)[] | null;
   tipo_sistema: 'Aplicación Móvil' | 'Aplicación de Escritorio' | 'Aplicación Web';
+  /**
+   * El slug es una versión amigable del nombre, generalmente en minúsculas y sin espacios. Se utiliza en las URLs para identificar de manera única a un proyecto. Ejemplo: csipro-access
+   */
+  slug: string;
   descripcion?: {
     root: {
       type: string;
@@ -540,6 +552,7 @@ export interface CargosSelect<T extends boolean = true> {
 export interface EventosSelect<T extends boolean = true> {
   tipo?: T;
   titulo?: T;
+  slug?: T;
   enable_multi_dates?: T;
   fecha_unica?: T;
   fecha_inicio?: T;
@@ -597,6 +610,7 @@ export interface MiembrosSelect<T extends boolean = true> {
   nombres?: T;
   apellidos?: T;
   email?: T;
+  portfolio?: T;
   slug?: T;
   redes?:
     | T
@@ -627,6 +641,7 @@ export interface ProyectosSelect<T extends boolean = true> {
   nombre?: T;
   participantes?: T;
   tipo_sistema?: T;
+  slug?: T;
   descripcion?: T;
   subtitulo?: T;
   imagen_principal?: T;

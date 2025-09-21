@@ -37,6 +37,27 @@ export const Miembros: CollectionConfig = {
       unique: true,
     },
     {
+      name: "portfolio",
+      label: "Portafolio",
+      type: "text",
+      unique: true,
+      admin: {
+        description: "Link a portafolio personal o página web.",
+      },
+      validate: (value) => {
+        if (value) {
+          try {
+            new URL(value);
+            return true;
+          } catch {
+            return "Por favor, ingresa una URL válida.";
+          }
+        }
+
+        return true;
+      },
+    },
+    {
       name: "slug",
       label: "Slug",
       type: "text",
@@ -69,14 +90,12 @@ export const Miembros: CollectionConfig = {
         plural: "Redes Sociales",
       },
       fields: [
-        // required
         {
           name: "nombre",
           label: "Nombre de Red Social",
           relationTo: "redes_sociales",
           type: "relationship",
         },
-
         {
           name: "link",
           label: "Link a Red Social",
@@ -114,7 +133,6 @@ export const Miembros: CollectionConfig = {
         },
       ],
     },
-    //En un futuro hacer relación a colección de cargos
     {
       name: "cargo",
       label: "Cargo",

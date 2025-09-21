@@ -37,6 +37,30 @@ export const Eventos: CollectionConfig = {
       required: true,
     },
     {
+      name: "slug",
+      label: "Slug",
+      type: "text",
+      required: true,
+      unique: true,
+      index: true,
+      admin: {
+        description:
+          "El slug es una versión amigable del nombre, generalmente en minúsculas y sin espacios. Se utiliza en las URLs para identificar de manera única a un evento. Ejemplo: csipro-kickoff-2024",
+      },
+      validate: (value) => {
+        if (!value) {
+          return "El slug es obligatorio.";
+        }
+
+        const slugRegex = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+        if (!slugRegex.test(value)) {
+          return "El slug solo puede contener letras minúsculas, números y guiones.";
+        }
+
+        return true;
+      },
+    },
+    {
       name: "enable_multi_dates",
       type: "checkbox", // required
       label: "Presioname para habilitar multiples fechas y horas",
