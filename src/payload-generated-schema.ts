@@ -228,6 +228,7 @@ export const eventos = pgTable(
     id: serial("id").primaryKey(),
     tipo: varchar("tipo"),
     titulo: varchar("titulo").notNull(),
+    slug: varchar("slug").notNull(),
     enable_multi_dates: boolean("enable_multi_dates").default(false),
     fecha_unica: timestamp("fecha_unica", { mode: "string", withTimezone: true, precision: 3 }),
     fecha_inicio: timestamp("fecha_inicio", {
@@ -257,6 +258,7 @@ export const eventos = pgTable(
       .notNull(),
   },
   (columns) => ({
+    eventos_slug_idx: uniqueIndex("eventos_slug_idx").on(columns.slug),
     eventos_imagen_principal_idx: index("eventos_imagen_principal_idx").on(
       columns.imagen_principal,
     ),
@@ -298,7 +300,7 @@ export const miembros_redes = pgTable(
     _order: integer("_order").notNull(),
     _parentID: integer("_parent_id").notNull(),
     id: varchar("id").primaryKey(),
-    nombre: integer("nombre_id").references(() => redes_sociales.id, {
+    red: integer("red_id").references(() => redes_sociales.id, {
       onDelete: "set null",
     }),
     link: varchar("link"),
@@ -306,7 +308,7 @@ export const miembros_redes = pgTable(
   (columns) => ({
     _orderIdx: index("miembros_redes_order_idx").on(columns._order),
     _parentIDIdx: index("miembros_redes_parent_id_idx").on(columns._parentID),
-    miembros_redes_nombre_idx: index("miembros_redes_nombre_idx").on(columns.nombre),
+    miembros_redes_red_idx: index("miembros_redes_red_idx").on(columns.red),
     _parentIDFk: foreignKey({
       columns: [columns["_parentID"]],
       foreignColumns: [miembros.id],
@@ -346,6 +348,7 @@ export const miembros = pgTable(
     nombres: varchar("nombres").notNull(),
     apellidos: varchar("apellidos").notNull(),
     email: varchar("email").notNull(),
+    portfolio: varchar("portfolio"),
     slug: varchar("slug").notNull(),
     fecha_entrada: timestamp("fecha_entrada", { mode: "string", withTimezone: true, precision: 3 }),
     fecha_salida: timestamp("fecha_salida", { mode: "string", withTimezone: true, precision: 3 }),
@@ -368,11 +371,45 @@ export const miembros = pgTable(
   },
   (columns) => ({
     miembros_email_idx: uniqueIndex("miembros_email_idx").on(columns.email),
+    miembros_portfolio_idx: uniqueIndex("miembros_portfolio_idx").on(columns.portfolio),
     miembros_slug_idx: uniqueIndex("miembros_slug_idx").on(columns.slug),
     miembros_foto_idx: index("miembros_foto_idx").on(columns.foto),
     miembros_cargo_idx: index("miembros_cargo_idx").on(columns.cargo),
     miembros_updated_at_idx: index("miembros_updated_at_idx").on(columns.updatedAt),
     miembros_created_at_idx: index("miembros_created_at_idx").on(columns.createdAt),
+  }),
+);
+
+export const proyectos_participantes = pgTable(
+  "proyectos_participantes",
+  {
+    _order: integer("_order").notNull(),
+    _parentID: integer("_parent_id").notNull(),
+    id: varchar("id").primaryKey(),
+    miembro: integer("miembro_id")
+      .notNull()
+      .references(() => miembros.id, {
+        onDelete: "set null",
+      }),
+    rol: integer("rol_id")
+      .notNull()
+      .references(() => project_roles.id, {
+        onDelete: "set null",
+      }),
+    descripcion: varchar("descripcion"),
+  },
+  (columns) => ({
+    _orderIdx: index("proyectos_participantes_order_idx").on(columns._order),
+    _parentIDIdx: index("proyectos_participantes_parent_id_idx").on(columns._parentID),
+    proyectos_participantes_miembro_idx: index("proyectos_participantes_miembro_idx").on(
+      columns.miembro,
+    ),
+    proyectos_participantes_rol_idx: index("proyectos_participantes_rol_idx").on(columns.rol),
+    _parentIDFk: foreignKey({
+      columns: [columns["_parentID"]],
+      foreignColumns: [proyectos.id],
+      name: "proyectos_participantes_parent_id_fk",
+    }).onDelete("cascade"),
   }),
 );
 
@@ -430,6 +467,7 @@ export const proyectos = pgTable(
     id: serial("id").primaryKey(),
     nombre: varchar("nombre").notNull(),
     tipo_sistema: enum_proyectos_tipo_sistema("tipo_sistema").notNull(),
+    slug: varchar("slug").notNull(),
     descripcion: jsonb("descripcion"),
     subtitulo: varchar("subtitulo").notNull(),
     imagen_principal: integer("imagen_principal_id")
@@ -454,6 +492,7 @@ export const proyectos = pgTable(
       .notNull(),
   },
   (columns) => ({
+    proyectos_slug_idx: uniqueIndex("proyectos_slug_idx").on(columns.slug),
     proyectos_imagen_principal_idx: index("proyectos_imagen_principal_idx").on(
       columns.imagen_principal,
     ),
@@ -462,30 +501,22 @@ export const proyectos = pgTable(
   }),
 );
 
-export const proyectos_rels = pgTable(
-  "proyectos_rels",
+export const project_roles = pgTable(
+  "project_roles",
   {
     id: serial("id").primaryKey(),
-    order: integer("order"),
-    parent: integer("parent_id").notNull(),
-    path: varchar("path").notNull(),
-    miembrosID: integer("miembros_id"),
+    role: varchar("role").notNull(),
+    description: varchar("description"),
+    updatedAt: timestamp("updated_at", { mode: "string", withTimezone: true, precision: 3 })
+      .defaultNow()
+      .notNull(),
+    createdAt: timestamp("created_at", { mode: "string", withTimezone: true, precision: 3 })
+      .defaultNow()
+      .notNull(),
   },
   (columns) => ({
-    order: index("proyectos_rels_order_idx").on(columns.order),
-    parentIdx: index("proyectos_rels_parent_idx").on(columns.parent),
-    pathIdx: index("proyectos_rels_path_idx").on(columns.path),
-    proyectos_rels_miembros_id_idx: index("proyectos_rels_miembros_id_idx").on(columns.miembrosID),
-    parentFk: foreignKey({
-      columns: [columns["parent"]],
-      foreignColumns: [proyectos.id],
-      name: "proyectos_rels_parent_fk",
-    }).onDelete("cascade"),
-    miembrosIdFk: foreignKey({
-      columns: [columns["miembrosID"]],
-      foreignColumns: [miembros.id],
-      name: "proyectos_rels_miembros_fk",
-    }).onDelete("cascade"),
+    project_roles_updated_at_idx: index("project_roles_updated_at_idx").on(columns.updatedAt),
+    project_roles_created_at_idx: index("project_roles_created_at_idx").on(columns.createdAt),
   }),
 );
 
@@ -591,6 +622,7 @@ export const payload_locked_documents_rels = pgTable(
     eventosID: integer("eventos_id"),
     miembrosID: integer("miembros_id"),
     proyectosID: integer("proyectos_id"),
+    "project-rolesID": integer("project_roles_id"),
     redes_socialesID: integer("redes_sociales_id"),
     tecnologiasID: integer("tecnologias_id"),
   },
@@ -616,6 +648,9 @@ export const payload_locked_documents_rels = pgTable(
     payload_locked_documents_rels_proyectos_id_idx: index(
       "payload_locked_documents_rels_proyectos_id_idx",
     ).on(columns.proyectosID),
+    payload_locked_documents_rels_project_roles_id_idx: index(
+      "payload_locked_documents_rels_project_roles_id_idx",
+    ).on(columns["project-rolesID"]),
     payload_locked_documents_rels_redes_sociales_id_idx: index(
       "payload_locked_documents_rels_redes_sociales_id_idx",
     ).on(columns.redes_socialesID),
@@ -656,6 +691,11 @@ export const payload_locked_documents_rels = pgTable(
       columns: [columns["proyectosID"]],
       foreignColumns: [proyectos.id],
       name: "payload_locked_documents_rels_proyectos_fk",
+    }).onDelete("cascade"),
+    "project-rolesIdFk": foreignKey({
+      columns: [columns["project-rolesID"]],
+      foreignColumns: [project_roles.id],
+      name: "payload_locked_documents_rels_project_roles_fk",
     }).onDelete("cascade"),
     redes_socialesIdFk: foreignKey({
       columns: [columns["redes_socialesID"]],
@@ -840,10 +880,10 @@ export const relations_miembros_redes = relations(miembros_redes, ({ one }) => (
     references: [miembros.id],
     relationName: "redes",
   }),
-  nombre: one(redes_sociales, {
-    fields: [miembros_redes.nombre],
+  red: one(redes_sociales, {
+    fields: [miembros_redes.red],
     references: [redes_sociales.id],
-    relationName: "nombre",
+    relationName: "red",
   }),
 }));
 export const relations_miembros_fotos_secundarias = relations(
@@ -879,6 +919,23 @@ export const relations_miembros = relations(miembros, ({ one, many }) => ({
     relationName: "cargo",
   }),
 }));
+export const relations_proyectos_participantes = relations(proyectos_participantes, ({ one }) => ({
+  _parentID: one(proyectos, {
+    fields: [proyectos_participantes._parentID],
+    references: [proyectos.id],
+    relationName: "participantes",
+  }),
+  miembro: one(miembros, {
+    fields: [proyectos_participantes.miembro],
+    references: [miembros.id],
+    relationName: "miembro",
+  }),
+  rol: one(project_roles, {
+    fields: [proyectos_participantes.rol],
+    references: [project_roles.id],
+    relationName: "rol",
+  }),
+}));
 export const relations_proyectos_imagenes_secundarias = relations(
   proyectos_imagenes_secundarias,
   ({ one }) => ({
@@ -906,19 +963,10 @@ export const relations_proyectos_tecnologias = relations(proyectos_tecnologias, 
     relationName: "tecnologia",
   }),
 }));
-export const relations_proyectos_rels = relations(proyectos_rels, ({ one }) => ({
-  parent: one(proyectos, {
-    fields: [proyectos_rels.parent],
-    references: [proyectos.id],
-    relationName: "_rels",
-  }),
-  miembrosID: one(miembros, {
-    fields: [proyectos_rels.miembrosID],
-    references: [miembros.id],
-    relationName: "miembros",
-  }),
-}));
 export const relations_proyectos = relations(proyectos, ({ one, many }) => ({
+  participantes: many(proyectos_participantes, {
+    relationName: "participantes",
+  }),
   imagen_principal: one(media, {
     fields: [proyectos.imagen_principal],
     references: [media.id],
@@ -930,10 +978,8 @@ export const relations_proyectos = relations(proyectos, ({ one, many }) => ({
   tecnologias: many(proyectos_tecnologias, {
     relationName: "tecnologias",
   }),
-  _rels: many(proyectos_rels, {
-    relationName: "_rels",
-  }),
 }));
+export const relations_project_roles = relations(project_roles, () => ({}));
 export const relations_redes_sociales = relations(redes_sociales, ({ one }) => ({
   logo: one(media, {
     fields: [redes_sociales.logo],
@@ -996,6 +1042,11 @@ export const relations_payload_locked_documents_rels = relations(
       references: [proyectos.id],
       relationName: "proyectos",
     }),
+    "project-rolesID": one(project_roles, {
+      fields: [payload_locked_documents_rels["project-rolesID"]],
+      references: [project_roles.id],
+      relationName: "project-roles",
+    }),
     redes_socialesID: one(redes_sociales, {
       fields: [payload_locked_documents_rels.redes_socialesID],
       references: [redes_sociales.id],
@@ -1054,10 +1105,11 @@ type DatabaseSchema = {
   miembros_redes: typeof miembros_redes;
   miembros_fotos_secundarias: typeof miembros_fotos_secundarias;
   miembros: typeof miembros;
+  proyectos_participantes: typeof proyectos_participantes;
   proyectos_imagenes_secundarias: typeof proyectos_imagenes_secundarias;
   proyectos_tecnologias: typeof proyectos_tecnologias;
   proyectos: typeof proyectos;
-  proyectos_rels: typeof proyectos_rels;
+  project_roles: typeof project_roles;
   redes_sociales: typeof redes_sociales;
   tecnologias: typeof tecnologias;
   payload_locked_documents: typeof payload_locked_documents;
@@ -1078,10 +1130,11 @@ type DatabaseSchema = {
   relations_miembros_redes: typeof relations_miembros_redes;
   relations_miembros_fotos_secundarias: typeof relations_miembros_fotos_secundarias;
   relations_miembros: typeof relations_miembros;
+  relations_proyectos_participantes: typeof relations_proyectos_participantes;
   relations_proyectos_imagenes_secundarias: typeof relations_proyectos_imagenes_secundarias;
   relations_proyectos_tecnologias: typeof relations_proyectos_tecnologias;
-  relations_proyectos_rels: typeof relations_proyectos_rels;
   relations_proyectos: typeof relations_proyectos;
+  relations_project_roles: typeof relations_project_roles;
   relations_redes_sociales: typeof relations_redes_sociales;
   relations_tecnologias: typeof relations_tecnologias;
   relations_payload_locked_documents_rels: typeof relations_payload_locked_documents_rels;

@@ -144,7 +144,7 @@ export const Miembros: CollectionConfig = {
       name: "proyectos",
       type: "join",
       collection: "proyectos",
-      on: "participantes",
+      on: "participantes.miembro",
     },
   ],
   hooks: {
@@ -156,7 +156,8 @@ export const Miembros: CollectionConfig = {
         const result = await req.payload.count({
           collection: "proyectos",
           where: {
-            participantes: {
+            // Why, Payload?
+            "participantes.miembro": {
               equals: doc.id,
             },
           },

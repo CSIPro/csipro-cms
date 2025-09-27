@@ -73,6 +73,7 @@ export interface Config {
     eventos: Evento;
     miembros: Miembro;
     proyectos: Proyecto;
+    'project-roles': ProjectRole;
     redes_sociales: RedesSociale;
     tecnologias: Tecnologia;
     'payload-locked-documents': PayloadLockedDocument;
@@ -83,6 +84,9 @@ export interface Config {
     miembros: {
       proyectos: 'proyectos';
     };
+    'project-roles': {
+      projects: 'proyectos';
+    };
   };
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
@@ -91,6 +95,7 @@ export interface Config {
     eventos: EventosSelect<false> | EventosSelect<true>;
     miembros: MiembrosSelect<false> | MiembrosSelect<true>;
     proyectos: ProyectosSelect<false> | ProyectosSelect<true>;
+    'project-roles': ProjectRolesSelect<false> | ProjectRolesSelect<true>;
     redes_sociales: RedesSocialesSelect<false> | RedesSocialesSelect<true>;
     tecnologias: TecnologiasSelect<false> | TecnologiasSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -366,7 +371,14 @@ export interface RedesSociale {
 export interface Proyecto {
   id: number;
   nombre: string;
-  participantes?: (number | Miembro)[] | null;
+  participantes?:
+    | {
+        miembro: number | Miembro;
+        rol: number | ProjectRole;
+        descripcion?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   tipo_sistema: 'Aplicación Móvil' | 'Aplicación de Escritorio' | 'Aplicación Web';
   /**
    * El slug es una versión amigable del nombre, generalmente en minúsculas y sin espacios. Se utiliza en las URLs para identificar de manera única a un proyecto. Ejemplo: csipro-access
@@ -406,6 +418,22 @@ export interface Proyecto {
   estado: 'Activo' | 'Inactivo' | 'Finalizado';
   url?: string | null;
   github_url?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "project-roles".
+ */
+export interface ProjectRole {
+  id: number;
+  role: string;
+  description?: string | null;
+  projects?: {
+    docs?: (number | Proyecto)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -451,6 +479,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'proyectos';
         value: number | Proyecto;
+      } | null)
+    | ({
+        relationTo: 'project-roles';
+        value: number | ProjectRole;
       } | null)
     | ({
         relationTo: 'redes_sociales';
@@ -639,7 +671,14 @@ export interface MiembrosSelect<T extends boolean = true> {
  */
 export interface ProyectosSelect<T extends boolean = true> {
   nombre?: T;
-  participantes?: T;
+  participantes?:
+    | T
+    | {
+        miembro?: T;
+        rol?: T;
+        descripcion?: T;
+        id?: T;
+      };
   tipo_sistema?: T;
   slug?: T;
   descripcion?: T;
@@ -662,6 +701,17 @@ export interface ProyectosSelect<T extends boolean = true> {
   estado?: T;
   url?: T;
   github_url?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "project-roles_select".
+ */
+export interface ProjectRolesSelect<T extends boolean = true> {
+  role?: T;
+  description?: T;
+  projects?: T;
   updatedAt?: T;
   createdAt?: T;
 }

@@ -15,6 +15,7 @@ import { Proyectos } from "./collections/Proyectos";
 import { Redes_sociales } from "./collections/Redes_sociales";
 import { Tecnologias } from "./collections/Tecnologias";
 import { Eventos } from "./collections/Eventos";
+import { ProjectRoles } from "./collections/ProjectRoles";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -26,7 +27,17 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Cargos, Eventos, Miembros, Proyectos, Redes_sociales, Tecnologias],
+  collections: [
+    Users,
+    Media,
+    Cargos,
+    Eventos,
+    Miembros,
+    Proyectos,
+    ProjectRoles,
+    Redes_sociales,
+    Tecnologias,
+  ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: {

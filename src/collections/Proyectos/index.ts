@@ -27,9 +27,28 @@ export const Proyectos: CollectionConfig = {
     {
       name: "participantes",
       label: "Participantes",
-      relationTo: "miembros",
-      type: "relationship",
-      hasMany: true,
+      type: "array",
+      fields: [
+        {
+          name: "miembro",
+          label: "Miembro",
+          relationTo: "miembros",
+          type: "relationship",
+          required: true,
+        },
+        {
+          name: "rol",
+          label: "Rol",
+          type: "relationship",
+          relationTo: "project-roles",
+          required: true,
+        },
+        {
+          name: "descripcion",
+          label: "Descripción de participación",
+          type: "textarea",
+        },
+      ],
     },
     {
       name: "tipo_sistema",
