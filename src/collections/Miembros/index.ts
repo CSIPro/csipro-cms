@@ -167,6 +167,22 @@ export const Miembros: CollectionConfig = {
         } else {
           doc.proyectos = { docs: [], hasNextPage: false, totalDocs: result.totalDocs };
         }
+
+        for (const proyecto of doc.proyectos.docs ?? []) {
+          const participant = (proyecto.participantes ?? []).find((p) => p.miembro === doc.id); // Find the participant object for this member
+
+          if (!participant) continue;
+
+          const participantRole = await req.payload.findByID({
+            collection: "project-roles",
+            id: participant.rol,
+          });
+
+          if (!participantRole) continue;
+
+          participant.rol = participantRole.role; // Replace role ID with role name
+        }
+
         return doc;
       },
     ],
