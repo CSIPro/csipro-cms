@@ -38,6 +38,7 @@ export default buildConfig({
     Redes_sociales,
     Tecnologias,
   ],
+  cors: ["http://localhost:3000", "https://csipro.isi.unison.mx"],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: {
