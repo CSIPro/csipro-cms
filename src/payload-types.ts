@@ -76,6 +76,7 @@ export interface Config {
     'project-roles': ProjectRole;
     redes_sociales: RedesSociale;
     tecnologias: Tecnologia;
+    carreras: Carrera;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -98,6 +99,7 @@ export interface Config {
     'project-roles': ProjectRolesSelect<false> | ProjectRolesSelect<true>;
     redes_sociales: RedesSocialesSelect<false> | RedesSocialesSelect<true>;
     tecnologias: TecnologiasSelect<false> | TecnologiasSelect<true>;
+    carreras: CarrerasSelect<false> | CarrerasSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -318,11 +320,28 @@ export interface Miembro {
   id: number;
   nombres: string;
   apellidos: string;
+  fecha_nacimiento?: string | null;
   email: string;
   /**
    * Link a portafolio personal o página web.
    */
   portfolio?: string | null;
+  sobre_mi?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  estado?: ('activo' | 'egresado' | 'inactivo') | null;
   /**
    * El slug es una versión amigable del nombre, generalmente en minúsculas y sin espacios. Se utiliza en las URLs para identificar de manera única a un miembro. Ejemplo: juan-perez
    */
@@ -344,11 +363,19 @@ export interface Miembro {
       }[]
     | null;
   cargo: number | Cargo;
+  carrera?: (number | null) | Carrera;
   proyectos?: {
     docs?: (number | Proyecto)[];
     hasNextPage?: boolean;
     totalDocs?: number;
   };
+  tecnologias?: (number | Tecnologia)[] | null;
+  intereses?:
+    | {
+        interes?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -361,6 +388,24 @@ export interface RedesSociale {
   nombre: string;
   logo: number | Media;
   logo_monocromatico: number | Media;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "carreras".
+ */
+export interface Carrera {
+  id: number;
+  nombre: string;
+  /**
+   * Código único de la carrera, por ejemplo: ISI, IME, IIS.
+   */
+  codigo: string;
+  /**
+   * El slug es una versión amigable del nombre, generalmente en minúsculas y sin espacios. Se utiliza en las URLs para identificar de manera única a una carrera. Ejemplo: isi, ingenieria-en-sistemas-de-informacion
+   */
+  slug: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -491,6 +536,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'tecnologias';
         value: number | Tecnologia;
+      } | null)
+    | ({
+        relationTo: 'carreras';
+        value: number | Carrera;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -641,8 +690,11 @@ export interface EventosSelect<T extends boolean = true> {
 export interface MiembrosSelect<T extends boolean = true> {
   nombres?: T;
   apellidos?: T;
+  fecha_nacimiento?: T;
   email?: T;
   portfolio?: T;
+  sobre_mi?: T;
+  estado?: T;
   slug?: T;
   redes?:
     | T
@@ -661,7 +713,15 @@ export interface MiembrosSelect<T extends boolean = true> {
         id?: T;
       };
   cargo?: T;
+  carrera?: T;
   proyectos?: T;
+  tecnologias?: T;
+  intereses?:
+    | T
+    | {
+        interes?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }
@@ -734,6 +794,17 @@ export interface TecnologiasSelect<T extends boolean = true> {
   nombre?: T;
   logo?: T;
   logo_monocromatico?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "carreras_select".
+ */
+export interface CarrerasSelect<T extends boolean = true> {
+  nombre?: T;
+  codigo?: T;
+  slug?: T;
   updatedAt?: T;
   createdAt?: T;
 }

@@ -30,6 +30,11 @@ export const Miembros: CollectionConfig = {
       required: true,
     },
     {
+      name: "fecha_nacimiento",
+      label: "Fecha de Nacimiento",
+      type: "date",
+    },
+    {
       name: "email",
       label: "Email",
       type: "email",
@@ -56,6 +61,31 @@ export const Miembros: CollectionConfig = {
 
         return true;
       },
+    },
+    {
+      name: "sobre_mi",
+      label: "Sobre mí",
+      type: "richText",
+    },
+    {
+      name: "estado",
+      label: "Estado",
+      type: "select",
+      options: [
+        {
+          label: "Activo",
+          value: "activo",
+        },
+        {
+          label: "Egresado",
+          value: "egresado",
+        },
+        {
+          label: "Inactivo",
+          value: "inactivo",
+        },
+      ],
+      defaultValue: "activo",
     },
     {
       name: "slug",
@@ -141,10 +171,39 @@ export const Miembros: CollectionConfig = {
       required: true,
     },
     {
+      name: "carrera",
+      label: "Carrera",
+      relationTo: "carreras",
+      type: "relationship",
+    },
+    {
       name: "proyectos",
       type: "join",
       collection: "proyectos",
       on: "participantes.miembro",
+    },
+    {
+      name: "tecnologias",
+      label: "Tecnologías preferidas",
+      type: "relationship",
+      relationTo: "tecnologias",
+      hasMany: true,
+    },
+    {
+      name: "intereses",
+      label: "Intereses personales",
+      labels: {
+        singular: "Interés personal",
+        plural: "Intereses personales",
+      },
+      type: "array",
+      fields: [
+        {
+          name: "interes",
+          label: "Interés",
+          type: "text",
+        },
+      ],
     },
   ],
   hooks: {
