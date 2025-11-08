@@ -419,7 +419,12 @@ export interface Proyecto {
   participantes?:
     | {
         miembro: number | Miembro;
-        rol: number | ProjectRole;
+        roles?:
+          | {
+              rol: number | ProjectRole;
+              id?: string | null;
+            }[]
+          | null;
         descripcion?: string | null;
         id?: string | null;
       }[]
@@ -735,7 +740,12 @@ export interface ProyectosSelect<T extends boolean = true> {
     | T
     | {
         miembro?: T;
-        rol?: T;
+        roles?:
+          | T
+          | {
+              rol?: T;
+              id?: T;
+            };
         descripcion?: T;
         id?: T;
       };

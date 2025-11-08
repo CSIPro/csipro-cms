@@ -32,7 +32,7 @@ export const ProjectRoles: CollectionConfig = {
       label: "Proyectos asociados",
       type: "join",
       collection: "proyectos",
-      on: "participantes.rol",
+      on: "participantes.roles.rol",
     },
   ],
 };

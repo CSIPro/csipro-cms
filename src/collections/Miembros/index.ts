@@ -232,14 +232,18 @@ export const Miembros: CollectionConfig = {
 
           if (!participant) continue;
 
-          const participantRole = await req.payload.findByID({
-            collection: "project-roles",
-            id: participant.rol,
-          });
+          const participantRoles = [];
+          for (const role of participant.roles as { id: string; rol: number }[]) {
+            const participantRole = await req.payload.findByID({
+              collection: "project-roles",
+              id: role.rol,
+            });
+            if (!participantRole) continue;
 
-          if (!participantRole) continue;
+            participantRoles.push(participantRole.role);
+          }
 
-          participant.rol = participantRole.role; // Replace role ID with role name
+          participant.roles = participantRoles; // Replace role IDs with role names
         }
 
         return doc;

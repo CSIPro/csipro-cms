@@ -37,11 +37,18 @@ export const Proyectos: CollectionConfig = {
           required: true,
         },
         {
-          name: "rol",
-          label: "Rol",
-          type: "relationship",
-          relationTo: "project-roles",
-          required: true,
+          name: "roles",
+          label: "Roles",
+          type: "array",
+          fields: [
+            {
+              name: "rol",
+              label: "Rol",
+              type: "relationship",
+              relationTo: "project-roles",
+              required: true,
+            },
+          ],
         },
         {
           name: "descripcion",
