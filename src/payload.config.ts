@@ -17,6 +17,7 @@ import { Tecnologias } from "./collections/Tecnologias";
 import { Eventos } from "./collections/Eventos";
 import { ProjectRoles } from "./collections/ProjectRoles";
 import { Carreras } from "./collections/Carreras";
+import { Resumes } from "./collections/Resumes";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -39,6 +40,7 @@ export default buildConfig({
     Redes_sociales,
     Tecnologias,
     Carreras,
+    Resumes,
   ],
   cors: ["http://localhost:3000", "https://csipro.isi.unison.mx"],
   editor: lexicalEditor(),

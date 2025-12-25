@@ -77,6 +77,7 @@ export interface Config {
     redes_sociales: RedesSociale;
     tecnologias: Tecnologia;
     carreras: Carrera;
+    resumes: Resume;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -101,6 +102,7 @@ export interface Config {
     redes_sociales: RedesSocialesSelect<false> | RedesSocialesSelect<true>;
     tecnologias: TecnologiasSelect<false> | TecnologiasSelect<true>;
     carreras: CarrerasSelect<false> | CarrerasSelect<true>;
+    resumes: ResumesSelect<false> | ResumesSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -324,17 +326,25 @@ export interface Miembro {
   /**
    * Nombre corto o apodo que se utilizará en lugar del nombre completo en ciertas secciones del sitio web.
    */
-  short_name?: string | null;
+  short_name: string;
   /**
    * Un breve texto que aparecerá debajo del nombre del miembro. Puede ser el puesto preferido o una frase corta.
    */
-  subtitle?: string | null;
+  subtitle: string;
   fecha_nacimiento?: string | null;
   email: string;
   /**
    * Link a portafolio personal o página web.
    */
   portfolio?: string | null;
+  /**
+   * Sube el currículum vitae del miembro.
+   */
+  resume?: (number | null) | Resume;
+  /**
+   * El slug es una versión amigable del nombre, generalmente en minúsculas y sin espacios. Se utiliza en las URLs para identificar de manera única a un miembro. Ejemplo: juan-perez
+   */
+  slug: string;
   sobre_mi?: {
     root: {
       type: string;
@@ -351,10 +361,6 @@ export interface Miembro {
     [k: string]: unknown;
   } | null;
   estado?: ('activo' | 'egresado' | 'inactivo') | null;
-  /**
-   * El slug es una versión amigable del nombre, generalmente en minúsculas y sin espacios. Se utiliza en las URLs para identificar de manera única a un miembro. Ejemplo: juan-perez
-   */
-  slug: string;
   redes?:
     | {
         red?: (number | null) | RedesSociale;
@@ -392,6 +398,25 @@ export interface Miembro {
     | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "resumes".
+ */
+export interface Resume {
+  id: number;
+  name: string;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -559,6 +584,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'carreras';
         value: number | Carrera;
+      } | null)
+    | ({
+        relationTo: 'resumes';
+        value: number | Resume;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -714,9 +743,10 @@ export interface MiembrosSelect<T extends boolean = true> {
   fecha_nacimiento?: T;
   email?: T;
   portfolio?: T;
+  resume?: T;
+  slug?: T;
   sobre_mi?: T;
   estado?: T;
-  slug?: T;
   redes?:
     | T
     | {
@@ -834,6 +864,24 @@ export interface CarrerasSelect<T extends boolean = true> {
   slug?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "resumes_select".
+ */
+export interface ResumesSelect<T extends boolean = true> {
+  name?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

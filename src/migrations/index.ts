@@ -5,6 +5,7 @@ import * as migration_20250927_232216 from './20250927_232216';
 import * as migration_20251107_032057_carreras_y_miembros from './20251107_032057_carreras_y_miembros';
 import * as migration_20251108_062819_multiple_roles from './20251108_062819_multiple_roles';
 import * as migration_20251225_053422 from './20251225_053422';
+import * as migration_20251225_230916_member_resume from './20251225_230916_member_resume';
 
 export const migrations = [
   {
@@ -40,6 +41,11 @@ export const migrations = [
   {
     up: migration_20251225_053422.up,
     down: migration_20251225_053422.down,
-    name: '20251225_053422'
+    name: '20251225_053422',
+  },
+  {
+    up: migration_20251225_230916_member_resume.up,
+    down: migration_20251225_230916_member_resume.down,
+    name: '20251225_230916_member_resume'
   },
 ];

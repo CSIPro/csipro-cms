@@ -37,6 +37,7 @@ export const Miembros: CollectionConfig = {
         description:
           "Nombre corto o apodo que se utilizará en lugar del nombre completo en ciertas secciones del sitio web.",
       },
+      required: true,
     },
     {
       name: "subtitle",
@@ -46,6 +47,7 @@ export const Miembros: CollectionConfig = {
         description:
           "Un breve texto que aparecerá debajo del nombre del miembro. Puede ser el puesto preferido o una frase corta.",
       },
+      required: true,
     },
     {
       name: "fecha_nacimiento",
@@ -81,29 +83,16 @@ export const Miembros: CollectionConfig = {
       },
     },
     {
-      name: "sobre_mi",
-      label: "Sobre mí",
-      type: "richText",
-    },
-    {
-      name: "estado",
-      label: "Estado",
-      type: "select",
-      options: [
-        {
-          label: "Activo",
-          value: "activo",
-        },
-        {
-          label: "Egresado",
-          value: "egresado",
-        },
-        {
-          label: "Inactivo",
-          value: "inactivo",
-        },
-      ],
-      defaultValue: "activo",
+      name: "resume",
+      label: "Currículum",
+      type: "upload",
+      relationTo: "resumes",
+      filterOptions: {
+        mimeType: { contains: "pdf" },
+      },
+      admin: {
+        description: "Sube el currículum vitae del miembro.",
+      },
     },
     {
       name: "slug",
@@ -128,6 +117,31 @@ export const Miembros: CollectionConfig = {
 
         return true;
       },
+    },
+    {
+      name: "sobre_mi",
+      label: "Sobre mí",
+      type: "richText",
+    },
+    {
+      name: "estado",
+      label: "Estado",
+      type: "select",
+      options: [
+        {
+          label: "Activo",
+          value: "activo",
+        },
+        {
+          label: "Egresado",
+          value: "egresado",
+        },
+        {
+          label: "Inactivo",
+          value: "inactivo",
+        },
+      ],
+      defaultValue: "activo",
     },
     {
       name: "redes", // required
