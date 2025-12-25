@@ -245,64 +245,56 @@ export const Miembros: CollectionConfig = {
     },
   ],
   hooks: {
-    afterRead: [
-      async ({ doc, req }) => {
-        if (!doc || !doc.id) return doc;
-        const proyectosCollection = req.payload.collections["proyectos"];
-        if (!proyectosCollection) return doc;
-        const result = await req.payload.count({
-          collection: "proyectos",
-          where: {
-            // Why, Payload?
-            "participantes.miembro": {
-              equals: doc.id,
-            },
-          },
-        });
-        if (typeof doc.proyectos === "object" && doc.proyectos !== null) {
-          doc.proyectos.totalDocs = result.totalDocs;
-        } else {
-          doc.proyectos = { docs: [], hasNextPage: false, totalDocs: result.totalDocs };
-        }
-
-        for (const proyecto of doc.proyectos.docs ?? []) {
-          const participant = (proyecto.participantes ?? []).find((p) => p.miembro === doc.id); // Find the participant object for this member
-
-          if (!participant) continue;
-
-          const participantRoles = [];
-          for (const role of participant.roles as { id: string; rol: number }[]) {
-            const participantRole = await req.payload.findByID({
-              collection: "project-roles",
-              id: role.rol,
-            });
-            if (!participantRole) continue;
-
-            participantRoles.push(participantRole.role);
-          }
-
-          participant.roles = participantRoles; // Replace role IDs with role names
-        }
-
-        const eventosCollection = req.payload.collections["eventos"];
-        if (!eventosCollection) return doc;
-        const eventosResult = await req.payload.count({
-          collection: "eventos",
-          where: {
-            participantes: {
-              contains: doc.id,
-            },
-          },
-        });
-
-        if (typeof doc.eventos === "object" && doc.eventos !== null) {
-          doc.eventos.totalDocs = eventosResult.totalDocs;
-        } else {
-          doc.eventos = { docs: [], hasNextPage: false, totalDocs: eventosResult.totalDocs };
-        }
-
-        return doc;
-      },
-    ],
+    // afterRead: [
+    //   async ({ doc, req }) => {
+    //     if (!doc || !doc.id) return doc;
+    //     const proyectosCollection = req.payload.collections["proyectos"];
+    //     if (!proyectosCollection) return doc;
+    //     const result = await req.payload.count({
+    //       collection: "proyectos",
+    //       where: {
+    //         // Why, Payload?
+    //         "participantes.miembro": {
+    //           equals: doc.id,
+    //         },
+    //       },
+    //     });
+    //     if (typeof doc.proyectos === "object" && doc.proyectos !== null) {
+    //       doc.proyectos.totalDocs = result.totalDocs;
+    //     } else {
+    //       doc.proyectos = { docs: [], hasNextPage: false, totalDocs: result.totalDocs };
+    //     }
+    //     for (const proyecto of doc.proyectos.docs ?? []) {
+    //       const participant = (proyecto.participantes ?? []).find((p) => p.miembro === doc.id); // Find the participant object for this member
+    //       if (!participant) continue;
+    //       const participantRoles = [];
+    //       for (const role of participant.roles as { id: string; rol: number }[]) {
+    //         const participantRole = await req.payload.findByID({
+    //           collection: "project-roles",
+    //           id: role.rol,
+    //         });
+    //         if (!participantRole) continue;
+    //         participantRoles.push(participantRole.role);
+    //       }
+    //       participant.roles = participantRoles; // Replace role IDs with role names
+    //     }
+    //     const eventosCollection = req.payload.collections["eventos"];
+    //     if (!eventosCollection) return doc;
+    //     const eventosResult = await req.payload.count({
+    //       collection: "eventos",
+    //       where: {
+    //         participantes: {
+    //           contains: doc.id,
+    //         },
+    //       },
+    //     });
+    //     if (typeof doc.eventos === "object" && doc.eventos !== null) {
+    //       doc.eventos.totalDocs = eventosResult.totalDocs;
+    //     } else {
+    //       doc.eventos = { docs: [], hasNextPage: false, totalDocs: eventosResult.totalDocs };
+    //     }
+    //     return doc;
+    //   },
+    // ],
   },
 };
