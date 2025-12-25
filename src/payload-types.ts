@@ -84,6 +84,7 @@ export interface Config {
   collectionsJoins: {
     miembros: {
       proyectos: 'proyectos';
+      eventos: 'eventos';
     };
     'project-roles': {
       projects: 'proyectos';
@@ -320,6 +321,14 @@ export interface Miembro {
   id: number;
   nombres: string;
   apellidos: string;
+  /**
+   * Nombre corto o apodo que se utilizará en lugar del nombre completo en ciertas secciones del sitio web.
+   */
+  short_name?: string | null;
+  /**
+   * Un breve texto que aparecerá debajo del nombre del miembro. Puede ser el puesto preferido o una frase corta.
+   */
+  subtitle?: string | null;
   fecha_nacimiento?: string | null;
   email: string;
   /**
@@ -366,6 +375,11 @@ export interface Miembro {
   carrera?: (number | null) | Carrera;
   proyectos?: {
     docs?: (number | Proyecto)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  eventos?: {
+    docs?: (number | Evento)[];
     hasNextPage?: boolean;
     totalDocs?: number;
   };
@@ -695,6 +709,8 @@ export interface EventosSelect<T extends boolean = true> {
 export interface MiembrosSelect<T extends boolean = true> {
   nombres?: T;
   apellidos?: T;
+  short_name?: T;
+  subtitle?: T;
   fecha_nacimiento?: T;
   email?: T;
   portfolio?: T;
@@ -720,6 +736,7 @@ export interface MiembrosSelect<T extends boolean = true> {
   cargo?: T;
   carrera?: T;
   proyectos?: T;
+  eventos?: T;
   tecnologias?: T;
   intereses?:
     | T

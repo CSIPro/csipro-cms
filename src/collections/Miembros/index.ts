@@ -30,6 +30,24 @@ export const Miembros: CollectionConfig = {
       required: true,
     },
     {
+      name: "short_name",
+      label: "Nombre corto",
+      type: "text",
+      admin: {
+        description:
+          "Nombre corto o apodo que se utilizará en lugar del nombre completo en ciertas secciones del sitio web.",
+      },
+    },
+    {
+      name: "subtitle",
+      label: "Subtítulo",
+      type: "text",
+      admin: {
+        description:
+          "Un breve texto que aparecerá debajo del nombre del miembro. Puede ser el puesto preferido o una frase corta.",
+      },
+    },
+    {
       name: "fecha_nacimiento",
       label: "Fecha de Nacimiento",
       type: "date",
@@ -183,6 +201,12 @@ export const Miembros: CollectionConfig = {
       on: "participantes.miembro",
     },
     {
+      name: "eventos",
+      type: "join",
+      collection: "eventos",
+      on: "participantes",
+    },
+    {
       name: "tecnologias",
       label: "Tecnologías preferidas",
       type: "relationship",
@@ -244,6 +268,23 @@ export const Miembros: CollectionConfig = {
           }
 
           participant.roles = participantRoles; // Replace role IDs with role names
+        }
+
+        const eventosCollection = req.payload.collections["eventos"];
+        if (!eventosCollection) return doc;
+        const eventosResult = await req.payload.count({
+          collection: "eventos",
+          where: {
+            participantes: {
+              contains: doc.id,
+            },
+          },
+        });
+
+        if (typeof doc.eventos === "object" && doc.eventos !== null) {
+          doc.eventos.totalDocs = eventosResult.totalDocs;
+        } else {
+          doc.eventos = { docs: [], hasNextPage: false, totalDocs: eventosResult.totalDocs };
         }
 
         return doc;
