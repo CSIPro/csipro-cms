@@ -52,7 +52,7 @@ export default buildConfig({
   },
   db: postgresAdapter({
     pool: {
-      min: 1,
+      min: 2,
       max: 10,
       idleTimeoutMillis: 30000,
       connectionTimeoutMillis: 5000,
