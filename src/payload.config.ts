@@ -57,6 +57,7 @@ export default buildConfig({
       idleTimeoutMillis: 30000,
       connectionTimeoutMillis: 5000,
       allowExitOnIdle: false,
+      keepAlive: true,
       user: process.env.DB_USER,
       host: process.env.DB_HOST,
       database: process.env.DB_NAME,
