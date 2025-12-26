@@ -317,8 +317,6 @@ export const Miembros: CollectionConfig = {
           page: page ? Number(page) : 1,
         });
 
-        console.log(memberEvents);
-
         return Response.json(memberEvents);
       },
     },
@@ -340,8 +338,6 @@ export const Miembros: CollectionConfig = {
           limit: limit ? Number(limit) : 10,
           page: page ? Number(page) : 1,
         });
-
-        console.log(memberProjects);
 
         return Response.json(memberProjects);
       },
