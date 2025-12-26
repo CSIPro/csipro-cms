@@ -252,6 +252,7 @@ export const Miembros: CollectionConfig = {
         if (!proyectosCollection) return doc;
         const result = await req.payload.count({
           collection: "proyectos",
+          depth: 0,
           where: {
             // Why, Payload?
             "participantes.miembro": {
@@ -282,6 +283,7 @@ export const Miembros: CollectionConfig = {
         if (!eventosCollection) return doc;
         const eventosResult = await req.payload.count({
           collection: "eventos",
+          depth: 0,
           where: {
             participantes: {
               contains: doc.id,
@@ -307,6 +309,7 @@ export const Miembros: CollectionConfig = {
 
         const memberEvents = await req.payload.find({
           collection: "eventos",
+          depth: 1,
           where: {
             participantes: {
               contains: memberId,
@@ -329,6 +332,7 @@ export const Miembros: CollectionConfig = {
 
         const memberProjects = await req.payload.find({
           collection: "proyectos",
+          depth: 1,
           where: {
             "participantes.miembro": {
               equals: +memberId,

@@ -29,6 +29,8 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
+  defaultDepth: 1,
+  maxDepth: 3,
   collections: [
     Users,
     Media,
@@ -50,6 +52,11 @@ export default buildConfig({
   },
   db: postgresAdapter({
     pool: {
+      min: 1,
+      max: 10,
+      idleTimeoutMillis: 30000,
+      connectionTimeoutMillis: 5000,
+      allowExitOnIdle: false,
       user: process.env.DB_USER,
       host: process.env.DB_HOST,
       database: process.env.DB_NAME,
