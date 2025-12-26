@@ -297,4 +297,54 @@ export const Miembros: CollectionConfig = {
       },
     ],
   },
+  endpoints: [
+    {
+      path: "/:id/events",
+      method: "get",
+      handler: async (req) => {
+        const memberId = req.routeParams.id;
+        const { limit, page } = req.query;
+
+        const memberEvents = await req.payload.find({
+          collection: "eventos",
+          where: {
+            participantes: {
+              contains: memberId,
+            },
+          },
+          sort: "-fecha_inicio",
+          limit: limit ? Number(limit) : 10,
+          page: page ? Number(page) : 1,
+        });
+
+        console.log(memberEvents);
+
+        return Response.json(memberEvents);
+      },
+    },
+    {
+      path: "/:id/projects",
+      method: "get",
+      handler: async (req) => {
+        const memberId = req.routeParams.id;
+        const { limit, page } = req.query;
+
+        const memberProjects = await req.payload.find({
+          collection: "proyectos",
+          where: {
+            "participantes.miembro": {
+              equals: +memberId,
+            },
+          },
+          sort: "-fecha_inicio",
+          limit: limit ? Number(limit) : 10,
+          page: page ? Number(page) : 1,
+        });
+
+        console.log(memberProjects);
+
+        return Response.json(memberProjects);
+      },
+    },
+  ],
 };
