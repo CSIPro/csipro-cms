@@ -7,8 +7,8 @@ export const Miembros: CollectionConfig = {
     plural: "Miembros",
   },
   admin: {
-    useAsTitle: "nombres",
-    defaultColumns: ["nombres", "apellidos", "slug", "email", "cargo"],
+    useAsTitle: "short_name",
+    defaultColumns: ["short_name", "slug", "email", "cargo"],
   },
   access: {
     create: () => true,

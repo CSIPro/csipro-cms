@@ -1,6 +1,4 @@
-// storage-adapter-import-placeholder
 import { postgresAdapter } from "@payloadcms/db-postgres";
-import { payloadCloudPlugin } from "@payloadcms/payload-cloud";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import path from "path";
 import { buildConfig } from "payload";
@@ -28,8 +26,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  defaultDepth: 1,
-  maxDepth: 3,
+  debug: true,
   collections: [
     Users,
     Media,
@@ -43,7 +40,11 @@ export default buildConfig({
     Carreras,
     Resumes,
   ],
-  cors: ["http://localhost:3000", "https://csipro.isi.unison.mx"],
+  cors: [
+    "http://localhost:3000",
+    "https://csipro.isi.unison.mx",
+    "https://admin.csipro.isi.unison.mx",
+  ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: {
@@ -65,7 +66,6 @@ export default buildConfig({
     },
   }),
   plugins: [
-    payloadCloudPlugin(),
     // storage-adapter-placeholder
   ],
 });
