@@ -11,7 +11,7 @@ export const Eventos: CollectionConfig = {
   },
   admin: {
     useAsTitle: "titulo",
-    defaultColumns: ["tipo", "titulo", "fecha_inicio", "lugar", "cupos"],
+    defaultColumns: ["titulo", "tipo", "fecha_inicio", "lugar", "cupos"],
   },
   hooks: {
     beforeChange: [insertFechas],
