@@ -344,5 +344,52 @@ export const Miembros: CollectionConfig = {
         return Response.json(memberProjects);
       },
     },
+    {
+      path: "/count",
+      method: "get",
+      handler: async (req) => {
+        try {
+          const activeMembers = await req.payload.count({
+            collection: "miembros",
+            where: {
+              estado: {
+                equals: "activo",
+              },
+            },
+          });
+
+          const graduatedMembers = await req.payload.count({
+            collection: "miembros",
+            where: {
+              estado: {
+                equals: "egresado",
+              },
+            },
+          });
+
+          const inactiveMembers = await req.payload.count({
+            collection: "miembros",
+            where: {
+              estado: {
+                equals: "inactivo",
+              },
+            },
+          });
+
+          return Response.json({
+            active: activeMembers.totalDocs,
+            graduated: graduatedMembers.totalDocs,
+            inactive: inactiveMembers.totalDocs,
+          });
+        } catch (error) {
+          console.error("Error al obtener el conteo de miembros:", error);
+
+          return Response.json(
+            { error: "Error al obtener el conteo de miembros." },
+            { status: 500 },
+          );
+        }
+      },
+    },
   ],
 };

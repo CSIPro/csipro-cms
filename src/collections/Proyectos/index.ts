@@ -162,4 +162,53 @@ export const Proyectos: CollectionConfig = {
       type: "text",
     },
   ],
+  endpoints: [
+    {
+      path: "/count",
+      method: "get",
+      handler: async (req) => {
+        try {
+          const activeProjects = await req.payload.count({
+            collection: "proyectos",
+            where: {
+              estado: {
+                equals: "Activo",
+              },
+            },
+          });
+
+          const inactiveProjects = await req.payload.count({
+            collection: "proyectos",
+            where: {
+              estado: {
+                equals: "Inactivo",
+              },
+            },
+          });
+
+          const finishedProjects = await req.payload.count({
+            collection: "proyectos",
+            where: {
+              estado: {
+                equals: "Finalizado",
+              },
+            },
+          });
+
+          return Response.json({
+            active: activeProjects.totalDocs,
+            inactive: inactiveProjects.totalDocs,
+            finished: finishedProjects.totalDocs,
+          });
+        } catch (error) {
+          console.error("Error al obtener el conteo de proyectos:", error);
+
+          return Response.json(
+            { error: "Error al obtener el conteo de proyectos." },
+            { status: 500 },
+          );
+        }
+      },
+    },
+  ],
 };
