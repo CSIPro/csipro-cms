@@ -35,6 +35,9 @@ importers:
       graphql:
         specifier: ^16.8.1
         version: 16.11.0
+      image-size:
+        specifier: ^2.0.2
+        version: 2.0.2
       next:
         specifier: 15.4.10
         version: 15.4.10(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.77.4)

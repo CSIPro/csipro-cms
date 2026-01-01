@@ -7,6 +7,11 @@ const nextConfig = {
     incomingRequests: true,
     outgoingResponses: true,
   },
+  experimental: {
+    serverActions: {
+      bodySizeLimit: "20mb",
+    },
+  },
 };
 
 export default withPayload(nextConfig, { devBundleServerPackages: false });

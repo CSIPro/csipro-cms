@@ -24,6 +24,7 @@
     "@payloadcms/ui": "3.69.0",
     "cross-env": "^7.0.3",
     "graphql": "^16.8.1",
+    "image-size": "^2.0.2",
     "next": "15.4.10",
     "payload": "3.69.0",
     "react": "19.1.0",

@@ -27,6 +27,13 @@ export default buildConfig({
     },
   },
   debug: true,
+  upload: {
+    useTempFiles: true,
+    tempFileDir: path.resolve(dirname, "./temp"),
+    limits: {
+      fileSize: 20 * 1024 * 1024, // 20 MB
+    },
+  },
   collections: [
     Users,
     Media,
@@ -44,6 +51,7 @@ export default buildConfig({
     "http://localhost:3000",
     "https://csipro.isi.unison.mx",
     "https://admin.csipro.isi.unison.mx",
+    ...(process.env.CORS_ORIGINS?.split(",") || []),
   ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",
