@@ -2,7 +2,9 @@ import { CollectionConfig } from "payload";
 
 export const Resumes: CollectionConfig = {
   slug: "resumes",
-  upload: true,
+  upload: {
+    mimeTypes: ["application/pdf"],
+  },
   access: {
     create: () => true,
     read: () => true,
