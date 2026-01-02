@@ -1,3 +1,4 @@
+import { revalidateFrontendCache } from "@/hooks/cache-revalidation";
 import { CollectionConfig } from "payload";
 
 export const Miembros: CollectionConfig = {
@@ -298,6 +299,7 @@ export const Miembros: CollectionConfig = {
         return doc;
       },
     ],
+    afterChange: [revalidateFrontendCache],
   },
   endpoints: [
     {

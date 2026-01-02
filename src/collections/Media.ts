@@ -1,6 +1,7 @@
 import { CollectionConfig } from "payload";
 import { generateImageSizes } from "./Media/generate-image-sizes";
 import { cleanupEmptyImage } from "./Media/cleanup-empty-image";
+import { revalidateMediaRelationsCache } from "@/hooks/cache-revalidation";
 
 export const Media: CollectionConfig = {
   slug: "media",
@@ -100,6 +101,6 @@ export const Media: CollectionConfig = {
   ],
   hooks: {
     beforeChange: [generateImageSizes],
-    afterChange: [cleanupEmptyImage],
+    afterChange: [cleanupEmptyImage, revalidateMediaRelationsCache],
   },
 };

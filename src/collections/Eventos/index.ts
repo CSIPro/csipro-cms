@@ -1,5 +1,6 @@
 import { CollectionConfig } from "payload";
 import { insertFechas } from "./hooks/insertFechas";
+import { revalidateFrontendCache } from "@/hooks/cache-revalidation";
 
 const fecha_minima = new Date(2014, 0, 1);
 
@@ -15,6 +16,7 @@ export const Eventos: CollectionConfig = {
   },
   hooks: {
     beforeChange: [insertFechas],
+    afterChange: [revalidateFrontendCache],
   },
   access: {
     create: () => true,

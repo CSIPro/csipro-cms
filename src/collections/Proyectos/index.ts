@@ -1,3 +1,4 @@
+import { revalidateFrontendCache } from "@/hooks/cache-revalidation";
 import { CollectionConfig } from "payload";
 
 export const Proyectos: CollectionConfig = {
@@ -162,6 +163,9 @@ export const Proyectos: CollectionConfig = {
       type: "text",
     },
   ],
+  hooks: {
+    afterChange: [revalidateFrontendCache],
+  },
   endpoints: [
     {
       path: "/count",
